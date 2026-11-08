@@ -1,0 +1,43 @@
+---
+title: List
+description: "Tick one value or several from a list."
+---
+
+<Frame>
+  <img src="/images/list.png" alt="A Product type chip with its list of values open, two ticked" />
+</Frame>
+
+```ts
+{
+  key: "vendor",
+  name: "Vendor",
+  multi: true,
+  values: [
+    { value: "acme", label: "Acme" },
+    { value: "globex", label: "Globex" },
+  ],
+  operators: [
+    { value: "is", label: "Is", chipLabel: "Vendor is" },
+    { value: "is_not", label: "Is not", chipLabel: "Vendor is not" },
+  ],
+}
+```
+
+<ResponseField name="multi" type="boolean" required>
+  `true` for several values (checkboxes), `false` for one (ticks).
+</ResponseField>
+
+<ResponseField name="values" type="{ value, label }[]" required>
+  The choices. A long list shows 25 at a time; see [long lists](/filter-types/long-lists).
+</ResponseField>
+
+**Values:** the ticked `value`s, `["acme", "globex"]`.
+
+**In the admin:** Products → Vendor, Status, Tag; Discounts → Status, Type.
+
+## How it behaves
+
+- **Choosing the field:** puts a chip at the caret and opens its values, with the conditions under a divider.
+- **Ticking:** each tick applies at once. The chip shows up to three values, then "+ 2 more".
+- **Narrowing:** typing straight after the chip narrows its values.
+- **Single-pick lists:** a tick replaces the value.

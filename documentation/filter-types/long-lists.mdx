@@ -1,0 +1,50 @@
+---
+title: Long lists
+description: "Values 25 at a time, from the page or a server, as the admin's are."
+---
+
+<Frame>
+  <img src="/images/long-list.png" alt="A Product list with a loading row at its end" />
+</Frame>
+
+## Values the page holds
+
+Nothing to do. A list shows 25 values and adds 25 more each time it's scrolled to the end. Typing straight after the chip narrows the whole list, not just what's showing.
+
+## Values from a server
+
+Add `fetchMoreValues` and `hasNextPage`. `values` is then what's loaded so far, for the current search:
+
+```tsx
+const [state, setState] = useState({ values: [], search: "", more: true });
+
+const field: FilterField = {
+  key: "product",
+  name: "Product",
+  multi: true,
+  values: state.values,
+  hasNextPage: state.more,
+  fetchMoreValues: async (search) => {
+    const fresh = search !== state.search;
+    const page = await api.products({ search, after: fresh ? null : state.cursor, first: 25 });
+    setState({
+      values: fresh ? page.values : [...state.values, ...page.values],
+      search,
+      more: page.hasNextPage,
+    });
+  },
+  operators: [/* … */],
+};
+```
+
+The bar calls `fetchMoreValues(search)`:
+
+| When | With |
+| --- | --- |
+| The list opens with no values | `""` |
+| 250ms after the merchant stops typing after the chip | the typed text: replace the values with that search's first page |
+| The list is scrolled to its end, while `hasNextPage` | the current search: add the next page |
+
+A loading row shows until the promise settles. The bar doesn't narrow server values itself; it shows what you return.
+
+The demo's Orders → Product filter works this way, with a short delay so the loading row shows.

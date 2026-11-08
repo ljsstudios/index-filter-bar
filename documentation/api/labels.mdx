@@ -1,0 +1,25 @@
+---
+title: Labels
+description: "Every word the bar shows."
+---
+
+`IndexFilterBarLabels` holds every word, grouped by the part that shows it. The English defaults are in [`locales/en.json`](https://github.com/ljsstudios/index-filter-bar/blob/main/src/locales/en.json).
+
+| Group | Shown by |
+| --- | --- |
+| `search` | The search field: placeholder, Clear, the Enter keycap, Custom date and range. |
+| `a11y` | Only screen readers: help, list and input names, announcements. |
+| `operators` | Standard condition words, for building your fields. |
+| `views` | The views menu, the eye, Reset and Save. |
+| `viewModals` | The save, rename, duplicate and delete modals, and their toasts. |
+| `columns` | The columns menu and its drag announcements. |
+| `sort` | The sort header tooltips. |
+
+| | |
+| --- | --- |
+| `defaultLabels` | English. |
+| `mergeLabels(overrides)` | English with your words laid over it, group by group. |
+| `format(template, values)` | Fills `{name}`-style holes. |
+| `toSearchFieldLabels(labels)` | `SearchField`'s label shape, for using it on its own. |
+
+See [languages](/guides/languages).

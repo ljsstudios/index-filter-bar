@@ -1,0 +1,35 @@
+---
+title: IndexFilterBar
+description: "The whole bar, laid out as the admin's."
+---
+
+<Frame>
+  <img src="/images/bar.png" alt="The bar: views button, search field with filters, columns and the eye" />
+</Frame>
+
+```tsx
+<IndexFilterBar {...bar.props} />
+```
+
+From left to right:
+- **The views button.**
+- **The search field** with its filters.
+- **The columns and sort menu.**
+- **The "Show view filters" eye**, on a saved view with filters of its own.
+- **Reset view and Save**, while the page differs from its view.
+
+It also renders the save, rename, duplicate and delete modals.
+
+Each part shows only when the page gives it what it needs: without saved views there's no views button, Reset, Save, eye or modals; with sort options but no columns the columns menu becomes a sort button. See [choosing the parts](/guides/customising).
+
+It takes `bar.props` from [`useIndexFilters`](/api/use-index-filters) as they are. For your own layout, see [custom layouts](/guides/custom-layouts).
+
+## Columns menu
+
+<Frame>
+  <img src="/images/columns.png" alt="The columns menu: Sort by, then each column with a drag handle and an eye" />
+</Frame>
+
+- **Sort by:** chooses the field and the direction.
+- **Columns:** each row is dragged to reorder, by mouse or keyboard, and its eye shows or hides the column.
+- **Saved views:** column changes are part of the view, so they make it unsaved until Update view.

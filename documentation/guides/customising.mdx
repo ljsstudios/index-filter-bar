@@ -1,0 +1,73 @@
+---
+title: Choosing the parts
+description: "Turn off saved views, sort or columns, or filters, as the admin's simpler pages do."
+---
+
+Not every list needs everything. The admin's own pages differ: Products has it all, Gift cards has no saved views, and Customers → Segments is a search and a sort button. The bar draws each part only when the page gives it what that part needs.
+
+| The page gives | The bar draws | Like the admin's |
+| --- | --- | --- |
+| Everything | Views, search with filters, the columns menu, Reset and Save | Products, Orders |
+| `savedViews: false` | No views button, Reset, Save, view filters eye or save modals | Gift cards |
+| `sortOptions`, no `columns` | A sort button opening the sort list on its own | Segments |
+| `columns`, no `sortOptions` | The columns menu without its Sort by row | |
+| Neither `sortOptions` nor `columns` | No button at the end | |
+| No `fields` | A plain search box: no filter list opens | Segments |
+
+## Without saved views
+
+<Frame>
+  <img src="/images/no-views.png" alt="The bar without a views button: the search field starts at the left, the columns button at the end" />
+</Frame>
+
+```tsx
+const bar = useIndexFilters({
+  fields,
+  sortOptions,
+  columns,
+  savedViews: false,
+});
+```
+
+The search icon takes the admin's extra spacing when the views button is gone. `views` and `onViewsChange` are ignored, and the URL keeps search, filters and sort but no `view`. `bar.view` is always All and never dirty.
+
+## Sort without columns
+
+<Frame>
+  <img src="/images/sort-only.png" alt="The sort button open: Last activity ticked, then Oldest first and Newest first" />
+</Frame>
+
+```tsx
+const bar = useIndexFilters({
+  sortOptions: [
+    { field: "lastActivity", label: "Last activity", ascLabel: "Oldest first", descLabel: "Newest first" },
+  ],
+  defaultSort: "lastActivity desc",
+});
+```
+
+The menu lists the fields, then the chosen field's two directions in its own words. Up and Down move through both groups. Its button is named "Sort by" (`labels.columns.sortBy`).
+
+## Search without filters
+
+<Frame>
+  <img src="/images/search-only.png" alt="A plain search field reading Search segments" />
+</Frame>
+
+Leave `fields` out and the field is a plain textbox: typing searches, Clear empties it, and no list opens. Name it for what it searches:
+
+```tsx
+import { mergeLabels } from "@ljsstudios/index-filter-bar";
+
+const bar = useIndexFilters({
+  sortOptions,
+  savedViews: false,
+  labels: mergeLabels({ search: { placeholder: "Search segments" } }),
+});
+```
+
+The demo's [Segments page](https://ljsstudios.github.io/index-filter-bar/segments/) puts these three together.
+
+## Further
+
+For a layout the bar doesn't offer, build your own from its parts. See [custom layouts](/guides/custom-layouts).

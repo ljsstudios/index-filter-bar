@@ -1,0 +1,45 @@
+---
+title: FilterField
+description: "One filter the bar offers."
+---
+
+<ResponseField name="key" type="string" required>
+  Its id, and its URL param.
+</ResponseField>
+<ResponseField name="name" type="string" required>
+  Its name in the field list.
+</ResponseField>
+<ResponseField name="kind" type='"list" | "number" | "date" | "text"' default="list">
+  The type. Currency and measurement are numbers with a `prefix` or `suffix`.
+</ResponseField>
+<ResponseField name="multi" type="boolean" required>
+  List: several values (checkboxes) or one (ticks).
+</ResponseField>
+<ResponseField name="values" type="{ value, label }[]" required>
+  A list's choices, a date's presets, a read-only filter's labels. `[]` for the rest.
+</ResponseField>
+<ResponseField name="operators" type="FilterOperator[]" required>
+  The conditions, the first being the default.
+
+  <Expandable title="FilterOperator">
+    <ResponseField name="value" type="string" required>Yours: "is", "is_not", "between"…</ResponseField>
+    <ResponseField name="label" type="string" required>In the condition menu: "Is between".</ResponseField>
+    <ResponseField name="chipLabel" type="string" required>On the chip: "Available is between".</ResponseField>
+    <ResponseField name="range" type="boolean">Numbers: takes two.</ResponseField>
+  </Expandable>
+</ResponseField>
+<ResponseField name="number" type="{ minPrecision, maxPrecision, prefix?, suffix? }">
+  Number, currency and measurement fields.
+</ResponseField>
+<ResponseField name="text" type="{ placeholder?, maxLength? }">
+  Text fields.
+</ResponseField>
+<ResponseField name="readOnly" type="boolean">
+  A page-set filter that can be removed but not changed. See [read-only](/filter-types/read-only).
+</ResponseField>
+<ResponseField name="fetchMoreValues" type="(search) => Promise<void> | void">
+  Values from a server, a page at a time. See [long lists](/filter-types/long-lists).
+</ResponseField>
+<ResponseField name="hasNextPage" type="boolean">
+  More values to fetch for the current search.
+</ResponseField>

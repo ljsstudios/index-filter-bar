@@ -1,0 +1,74 @@
+---
+title: Saved views
+description: "Named combinations of search, filters, sort and columns, stored however you like."
+---
+
+<Frame>
+  <img src="/images/saved-views.png" alt="The views menu open, with All, Active, Draft and Archived" />
+</Frame>
+
+A view is a named combination of search, filters, sort and columns:
+
+```ts
+interface SavedView {
+  title: string;
+  sort: string; // "title asc"
+  query: string;
+  filters: SavedViewFilter[];
+  columns?: { order: string[]; hidden: string[] }; // left out while it's the default
+}
+```
+
+The first view is always **All**, the page's own default. It can be duplicated, but not renamed or deleted, and Save on it makes a new view.
+
+## Storing them
+
+Pass the stored list in, and store the whole list whenever it changes:
+
+```tsx
+const bar = useIndexFilters({
+  fields,
+  views: shop.productsViews,
+  onViewsChange: async (views) => {
+    await fetch("/api/views/products", { method: "PUT", body: JSON.stringify(views) });
+  },
+  onToast: (message) => shopify.toast.show(message),
+  onError: (error) => reportError(error),
+});
+```
+
+<ResponseField name="onViewsChange" type="(views) => void | Promise<void>">
+  Called with the whole new list after Save as new view, Update view, Rename, Duplicate or Delete. The bar only changes its list once the promise resolves. If it rejects, the modal stays open with an error banner.
+</ResponseField>
+
+<ResponseField name="onToast" type="(message) => void">
+  "View created", "View saved" and the like, after a save lands.
+</ResponseField>
+
+Read a stored list back safely with `readSavedViews(stored, defaults)`, which drops malformed views and keeps All first.
+
+<Tip>
+  For prototypes and demos, `localStorageViews(key, defaults)` keeps views in the browser:
+
+  ```tsx
+  const [stored] = useState(() => localStorageViews("products-views", DEFAULT_VIEWS));
+  const bar = useIndexFilters({ fields, ...stored });
+  ```
+</Tip>
+
+## Show view filters
+
+On a saved view other than All, the view's own search and filters are applied but kept out of the bar, as the admin does.
+
+- **The eye** ("Show view filters") shows them.
+- **A filter the merchant adds** shows on its own.
+- **Update view** folds the added filter into the view, and it hides with the others.
+
+## Reset and Save
+
+- **Reset and Save** slide in while the page differs from its view.
+- **Reset view** goes back to the view at once.
+- **On All,** Save opens "Save view as".
+- **On a saved view,** Save opens a menu with Update view (⌘S) and Save as new view (⌘⇧S).
+
+`readOnly: true` lets merchants switch views but not save, rename or delete them.

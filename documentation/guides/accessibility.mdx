@@ -1,0 +1,25 @@
+---
+title: Accessibility
+description: "What the bar does for screen reader and keyboard users, and how it's checked."
+---
+
+The bar is checked with axe against WCAG 2.2 AA, in the test suite and on the demo pages, and spot-checked with VoiceOver.
+
+| | |
+| --- | --- |
+| **The search field** | A combobox with keyboard help: how to move between filters and remove one. |
+| **Lists** | Named for what they hold ("Product type values", "Product type condition"). Multi-select lists mark ticked values as selected. |
+| **Typed values** | Named textboxes: "Available, minimum", "Date, Starting year", "Order total (USD $), maximum". |
+| **Remove buttons** | Name their filter: "Remove Vendor is Acme". |
+| **Announcements** | A polite live region says each filter added, changed or removed, and a chip's words when it becomes active. |
+| **Menus** | The views and Save menus focus an item on open and move with the arrow keys. |
+| **Columns** | Each column has a reorder handle. Moves by keyboard are announced in the merchant's language. |
+| **Targets** | Remove, add and eye buttons take clicks across 24px. |
+
+## Where it differs from the admin
+
+The admin's bar doesn't do most of the above, so these differences are invisible. Two show:
+- **Placeholder contrast:** typed-value hints ("0", "YYYY", "xxxx") are drawn a little darker, reaching WCAG's 4.5:1.
+- **The field's role:** the admin's field is a plain textbox, and ours is a combobox.
+
+See the [keyboard reference](/guides/keyboard).

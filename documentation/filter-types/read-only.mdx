@@ -1,0 +1,25 @@
+---
+title: Read-only
+description: "A filter your page sets, which the merchant can remove but not change."
+---
+
+<Frame>
+  <img src="/images/read-only.png" alt="A grey Product variant is chip" />
+</Frame>
+
+For a filter that comes from elsewhere, such as a link from another page. It's drawn grey. It can be removed, but not opened or changed, and the field list never offers it.
+
+```ts
+{
+  key: "variant",
+  name: "Product variant",
+  readOnly: true,
+  multi: false,
+  values: [{ value: "123", label: "Snowboard - Large" }],
+  operators: [{ value: "is", label: "Is", chipLabel: "Product variant is" }],
+}
+```
+
+`values` holds the label to show for each value. Set the filter through the URL (`?variant=123`) or the page's initial filters. In the demo, an Inventory product with orders links to them this way.
+
+**In the admin:** Purchase orders → Product variant.

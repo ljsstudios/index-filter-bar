@@ -5,6 +5,8 @@ import { Orders } from "./pages/Orders";
 import { Products } from "./pages/Products";
 import { Segments } from "./pages/Segments";
 
+const DOCS_URL = "https://index-filter-bar.mintlify.site";
+
 const PAGES = [
   {
     route: "products",
@@ -95,6 +97,24 @@ export const App = () => {
                   </s-clickable>
                 </div>
               ))}
+              <s-divider></s-divider>
+              <s-clickable
+                padding="small-100"
+                href={DOCS_URL}
+                target="_blank"
+                accessibilityLabel="Documentation"
+              >
+                <s-grid gridTemplateColumns="auto 1fr auto" alignItems="center" gap="base">
+                  <s-icon type="book-open"></s-icon>
+                  <s-box>
+                    <s-text type="strong">Documentation</s-text>
+                    <s-paragraph color="subdued">
+                      Install, filter types, saved views, languages and the API.
+                    </s-paragraph>
+                  </s-box>
+                  <s-icon type="external"></s-icon>
+                </s-grid>
+              </s-clickable>
             </s-box>
           </s-section>
           <Footer />

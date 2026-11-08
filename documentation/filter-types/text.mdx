@@ -1,0 +1,31 @@
+---
+title: Text
+description: "Type a value, with an optional hint and length."
+---
+
+<Frame>
+  <img src="/images/text.png" alt="A Credit card (last 4 digits) is chip reading 4242" />
+</Frame>
+
+```ts
+{
+  key: "card",
+  name: "Credit card (last 4 digits)",
+  kind: "text",
+  text: { placeholder: "xxxx", maxLength: 4 },
+  multi: false,
+  values: [],
+  operators: [
+    { value: "is", label: "Is", chipLabel: "Credit card (last 4 digits) is" },
+    { value: "is_not", label: "Is not", chipLabel: "Credit card (last 4 digits) is not" },
+  ],
+}
+```
+
+<ResponseField name="text" type="{ placeholder?, maxLength? }">
+  The empty chip's hint, and the most characters it takes. Typing and pasting are cut to fit.
+</ResponseField>
+
+**Values:** `["4242"]`, trimmed.
+
+**In the admin:** Orders → Credit card (last 4 digits).

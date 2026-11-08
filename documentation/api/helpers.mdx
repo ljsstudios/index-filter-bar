@@ -1,0 +1,18 @@
+---
+title: Helpers
+description: "Pure functions behind the bar, for your server and your own state."
+---
+
+| Helper | |
+| --- | --- |
+| `readUrlState(fields, search?)` | The bar's state from a query string. |
+| `writeUrlState(fields, state, defaultSort)` | Writes it with `history.replaceState`, keeping params the bar doesn't own. |
+| `encodeFilters(fields, filters)` | Filters to `[param, value]` pairs. |
+| `decodeFilters(fields, params)` | `URLSearchParams` to filters. Use it on your server. |
+| `readSavedViews(stored, defaults)` | Reads stored views back safely, All first. |
+| `localStorageViews(key, defaults)` | `{ views, onViewsChange }` kept in the browser. |
+| `splitViewFilters`, `mergeViewFilters` | Which filters a saved view hides, and putting them back. |
+| `splitViewQuery`, `mergeViewQuery` | The same for its search. |
+| `reconcileColumns(stored, keys, defaultHidden)` | A stored column layout against the page's current columns. |
+| `columnsToStore(columns, keys, defaultHidden)` | `undefined` while the layout is the default. |
+| `MAX_SAVED_VIEWS`, `MAX_VIEW_TITLE` | 50 views, 40 characters. |

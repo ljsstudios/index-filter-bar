@@ -1,0 +1,87 @@
+---
+title: Quickstart
+description: "A working bar with one filter, a sort and two columns."
+---
+
+<Steps>
+  <Step title="Describe your filters">
+    Each filter is a `FilterField`: a key, a name, its values and its conditions.
+
+    ```tsx
+    import type { FilterField } from "@ljsstudios/index-filter-bar";
+
+    const fields: FilterField[] = [
+      {
+        key: "vendor",
+        name: "Vendor",
+        multi: true,
+        values: [
+          { value: "acme", label: "Acme" },
+          { value: "globex", label: "Globex" },
+        ],
+        operators: [
+          { value: "is", label: "Is", chipLabel: "Vendor is" },
+          { value: "is_not", label: "Is not", chipLabel: "Vendor is not" },
+        ],
+      },
+    ];
+    ```
+  </Step>
+
+  <Step title="Add the hook and the bar">
+    ```tsx
+    import { IndexFilterBar, useIndexFilters } from "@ljsstudios/index-filter-bar";
+
+    export const ProductsPage = () => {
+      const bar = useIndexFilters({
+        fields,
+        sortOptions: [{ field: "title", label: "Title", ascLabel: "A-Z", descLabel: "Z-A" }],
+        columns: [
+          { key: "vendor", label: "Vendor" },
+          { key: "status", label: "Status" },
+        ],
+      });
+
+      return (
+        <s-page heading="Products">
+          <IndexFilterBar {...bar.props} />
+        </s-page>
+      );
+    };
+    ```
+  </Step>
+
+  <Step title="Query your data with it">
+    Send the bar's state to your API, and show the columns the merchant chose:
+
+    ```tsx
+    const { data, isFetching } = useProducts({
+      search: bar.query,
+      filters: bar.filters,
+      sort: bar.sort,
+    });
+
+    <s-table loading={isFetching || bar.pending}>
+      <s-table-header-row>
+        {bar.visibleColumns.map((key) => (
+          <s-table-header key={key}>{/* … */}</s-table-header>
+        ))}
+      </s-table-header-row>
+      {/* … */}
+    </s-table>
+    ```
+
+    `bar.pending` is true while typed text waits out the search delay, so the table shows loading from the first key.
+  </Step>
+</Steps>
+
+## Next
+
+<CardGroup cols={2}>
+  <Card title="Filter types" icon="filter" href="/filter-types/overview">
+    Numbers, dates, text, currency and more
+  </Card>
+  <Card title="Saved views" icon="bookmark" href="/guides/saved-views">
+    Let merchants save and share their views
+  </Card>
+</CardGroup>

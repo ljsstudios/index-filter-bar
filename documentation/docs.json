@@ -1,0 +1,113 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Search & Filters Bar",
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#005BD3",
+    "light": "#4B9BFF",
+    "dark": "#004299"
+  },
+  "fonts": {
+    "heading": {
+      "family": "JetBrains Mono"
+    },
+    "body": {
+      "family": "Inter"
+    }
+  },
+  "search": {
+    "prompt": "Search the docs"
+  },
+  "seo": {
+    "indexHiddenPages": false
+  },
+  "contextual": {
+    "options": ["copy", "view", "chatgpt", "claude"]
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Live demo",
+        "href": "https://ljsstudios.github.io/index-filter-bar/"
+      }
+    ],
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/ljsstudios/index-filter-bar"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guide",
+        "groups": [
+          {
+            "group": "Getting started",
+            "icon": "rocket",
+            "pages": ["index", "installation", "quickstart"]
+          },
+          {
+            "group": "Filter types",
+            "icon": "filter",
+            "pages": [
+              "filter-types/overview",
+              "filter-types/list",
+              "filter-types/number",
+              "filter-types/date",
+              "filter-types/text",
+              "filter-types/currency",
+              "filter-types/measurement",
+              "filter-types/read-only",
+              "filter-types/long-lists"
+            ]
+          },
+          {
+            "group": "Guides",
+            "icon": "book-open",
+            "pages": [
+              "guides/customising",
+              "guides/saved-views",
+              "guides/url",
+              "guides/languages",
+              "guides/accessibility",
+              "guides/keyboard",
+              "guides/custom-layouts"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API reference",
+        "groups": [
+          {
+            "group": "API reference",
+            "icon": "code",
+            "pages": [
+              "api/use-index-filters",
+              "api/index-filter-bar",
+              "api/filter-field",
+              "api/components",
+              "api/helpers",
+              "api/labels"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Changelog",
+        "groups": [
+          {
+            "group": "Changelog",
+            "pages": ["changelog"]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/ljsstudios/index-filter-bar"
+    }
+  }
+}

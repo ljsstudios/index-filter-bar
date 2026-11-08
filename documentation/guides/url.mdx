@@ -1,0 +1,21 @@
+---
+title: State in the URL
+description: "Search, filters, sort and view as readable URL params."
+---
+
+With `url` on (the default), the bar keeps its state in the page URL, so a refresh, the back button or a shared link lands on the same list. It writes with `history.replaceState` and needs no router. Params the bar doesn't own are left alone.
+
+```
+?query=snow
+&sort=created+desc                    left out while it's the default
+&view=Drafts                          left out on All
+&vendor=Acme&vendor=Globex            Vendor is Acme, Globex
+&vendor_not=Initech                   Vendor is not Initech
+&available_between=5&available_between=20
+&date=2026-11-03&date_shape=date
+```
+
+- **Params:** one per field and condition. `is` is the bare key, `is_not` is `_not`, and any other condition is `_<value>`.
+- **Repeats:** values repeat rather than join, so a value holding a comma survives.
+
+Read the same format on your server with `decodeFilters(fields, params)`, or write it with `encodeFilters(fields, filters)`. Turn it off with `url: false`.

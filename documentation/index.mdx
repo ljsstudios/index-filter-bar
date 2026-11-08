@@ -1,0 +1,61 @@
+---
+title: Introduction
+description: "The Shopify admin's index search and filter bar, for embedded apps built with React and Polaris 2.0 web components."
+---
+
+Search & Filters Bar is the bar at the top of the Shopify admin's index pages (Products, Orders, Inventory), rebuilt for your embedded app. It's matched to the admin's look and behaviour element by element, so merchants get the bar they already know.
+
+It's built for **Polaris 2.0 web components** (`polaris-2.0.js`, the `s-*` elements), not the older Polaris React library.
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    A working bar in a dozen lines
+  </Card>
+  <Card title="Live demo" icon="play" href="https://ljsstudios.github.io/index-filter-bar/">
+    Products, Inventory and Orders on sample data
+  </Card>
+</CardGroup>
+
+## What you get
+
+<CardGroup cols={3}>
+  <Card title="Every filter type" icon="filter" href="/filter-types/overview">
+    List, number, date, text, currency, measurement and read-only
+  </Card>
+  <Card title="Saved views" icon="bookmark" href="/guides/saved-views">
+    Reset, Save, Update, Save as new, and the "Show view filters" eye
+  </Card>
+  <Card title="Columns and sort" icon="table-columns" href="/api/index-filter-bar">
+    Reorder, hide and sort from the admin's columns menu
+  </Card>
+  <Card title="State in the URL" icon="link" href="/guides/url">
+    A refresh or shared link lands on the same list
+  </Card>
+  <Card title="Long lists" icon="list" href="/filter-types/long-lists">
+    25 values at a time, from the page or your server
+  </Card>
+  <Card title="Accessible" icon="universal-access" href="/guides/accessibility">
+    WCAG 2.2 AA, checked with axe and a screen reader
+  </Card>
+</CardGroup>
+
+## How it fits in
+
+The bar never fetches your data. It hands you a search, filters and a sort; your page sends them to your own API and draws the table:
+
+```tsx
+const bar = useIndexFilters({ fields, sortOptions, columns, views, onViewsChange });
+
+const { data, isFetching } = useOrders(bar.query, bar.filters, bar.sort);
+
+return (
+  <>
+    <IndexFilterBar {...bar.props} />
+    <s-table loading={isFetching || bar.pending}>{/* … */}</s-table>
+  </>
+);
+```
+
+<Note>
+  Not affiliated with or endorsed by Shopify. Shopify and Polaris are trademarks of Shopify Inc.
+</Note>

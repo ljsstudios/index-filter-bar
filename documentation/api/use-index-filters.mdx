@@ -1,0 +1,88 @@
+---
+title: useIndexFilters
+description: "The bar's state: search, filters, sort, columns, saved views and the URL."
+---
+
+```ts
+const bar = useIndexFilters(options);
+```
+
+## Options
+
+All optional.
+
+<ParamField path="fields" type="FilterField[]">
+  What the bar filters by. See [FilterField](/api/filter-field). Without them the field is a plain search.
+</ParamField>
+<ParamField path="sortOptions" type="SortOption[]">
+  `{ field, label, ascLabel, descLabel }` for each sort, shown in the columns menu, or on a sort button of its own when there are no `columns`. See [choosing the parts](/guides/customising).
+</ParamField>
+<ParamField path="defaultSort" type="string" default="title asc">
+  All's sort, as `"field direction"`.
+</ParamField>
+<ParamField path="columns" type="{ key, label, hidden? }[]">
+  The page's columns in default order. `hidden` starts a column hidden. Without them there's no columns menu.
+</ParamField>
+<ParamField path="savedViews" type="boolean" default="true">
+  False drops the views button, Reset and Save, the view filters eye and the save modals, as the admin's Gift cards page. See [choosing the parts](/guides/customising).
+</ParamField>
+<ParamField path="views" type="SavedView[]">
+  The stored views, All first. Without them the page has just All.
+</ParamField>
+<ParamField path="onViewsChange" type="(views) => void | Promise<void>">
+  Stores the whole list after any change. See [saved views](/guides/saved-views).
+</ParamField>
+<ParamField path="url" type="boolean" default="true">
+  Keep search, filters, sort and view in the URL. See [state in the URL](/guides/url).
+</ParamField>
+<ParamField path="searchDelay" type="number" default="400">
+  Milliseconds after the last key before `query` changes (the admin's delay).
+</ParamField>
+<ParamField path="labels" type="IndexFilterBarLabels">
+  Every word the bar shows; English by default. See [languages](/guides/languages).
+</ParamField>
+<ParamField path="id" type="string" default="index-filter-bar">
+  Unique per page when a page has two bars: the popovers' and modals' ids.
+</ParamField>
+<ParamField path="readOnly" type="boolean">
+  Views can be switched but not saved, renamed or deleted.
+</ParamField>
+<ParamField path="onToast" type="(message) => void">
+  After a view is saved, renamed or deleted. In a Shopify app, `shopify.toast.show`.
+</ParamField>
+<ParamField path="onError" type="(error, action) => void">
+  A view failed to save. Its modal shows the error; report it here.
+</ParamField>
+
+## Returns
+
+<ResponseField name="query" type="string">
+  The search text to send, after `searchDelay`. Includes the selected view's hidden search.
+</ResponseField>
+<ResponseField name="pending" type="boolean">
+  Typed text is waiting out `searchDelay`. Use `loading={isFetching || bar.pending}` to show loading from the first key.
+</ResponseField>
+<ResponseField name="filters" type="SavedViewFilter[]">
+  `{ field, operator, values, shape? }[]`. Includes the selected view's hidden filters.
+</ResponseField>
+<ResponseField name="sort" type="string">
+  `"field direction"`, for example `"title asc"`.
+</ResponseField>
+<ResponseField name="setSort" type="(sort) => void">
+  For sortable table headers.
+</ResponseField>
+<ResponseField name="visibleColumns" type="string[]">
+  Column keys to show, in the merchant's order.
+</ResponseField>
+<ResponseField name="view" type="{ index, title, dirty }">
+  The selected view; index 0 is All. `dirty` when the page differs from it.
+</ResponseField>
+<ResponseField name="hasFilters" type="boolean">
+  Anything is narrowing the list.
+</ResponseField>
+<ResponseField name="clear" type="() => void">
+  Clears the search and filters the bar shows; a hidden view's own stay.
+</ResponseField>
+<ResponseField name="props" type="IndexFilterBarProps">
+  Spread into [`<IndexFilterBar>`](/api/index-filter-bar).
+</ResponseField>

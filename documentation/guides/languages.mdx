@@ -1,0 +1,46 @@
+---
+title: Languages
+description: "English, German, Spanish and French built in, any other through a labels object."
+---
+
+Every word the bar shows comes from one labels object, English by default. It's grouped by the part that shows it:
+- `search`, `a11y`, `operators`;
+- `views`, `viewModals`;
+- `columns`, `sort`.
+
+## Shipped languages
+
+```tsx
+import fr from "@ljsstudios/index-filter-bar/locales/fr.json";
+
+const bar = useIndexFilters({ fields, labels: fr });
+```
+
+English, German (`de`), Spanish (`es`) and French (`fr`) ship with the package.
+
+Your fields' own words are yours: `name`, value labels, and `label` and `chipLabel` for each condition. Translate them with the rest of your app; the `operators` group holds the standard condition words to build them from.
+
+## A few words changed, or a new language
+
+```ts
+import { mergeLabels } from "@ljsstudios/index-filter-bar";
+
+const labels = mergeLabels({
+  views: { all: "Everything" },
+  search: { placeholder: "Search products" },
+});
+```
+
+`mergeLabels` lays your words over English, group by group. For a new language, copy `locales/en.json`, translate it, and pass it as `labels`.
+
+`{name}`, `{chip}`, `{field}` and `{count}` in a string are filled in by the bar.
+
+## Screen reader words
+
+The `a11y` group is only ever heard, never seen:
+- the field's keyboard help;
+- each list's name;
+- each typed value's name;
+- the announcements ("Filter added: …").
+
+Translate it with the rest.

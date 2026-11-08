@@ -1,0 +1,33 @@
+---
+title: Custom layouts
+description: "Use the bar's parts on their own."
+---
+
+`<IndexFilterBar>` is the bar's parts laid out as the admin's. For your own layout, use them directly; each takes its own `labels` group.
+
+```tsx
+import {
+  ColumnsPopover,
+  IndexBar,
+  SaveControls,
+  SearchField,
+  ViewSwitcher,
+  toSearchFieldLabels,
+} from "@ljsstudios/index-filter-bar";
+
+<IndexBar
+  views={<ViewSwitcher popoverId="views" titles={titles} selected={0} onSelect={select} onAction={act} />}
+  actions={<SaveControls idPrefix="products" dirty={dirty} onAll onReset={reset} onSaveAsNew={saveAs} onUpdate={update} />}
+>
+  <SearchField
+    value={query}
+    onChange={setQuery}
+    fields={fields}
+    filters={filters}
+    onFiltersChange={setFilters}
+    labels={toSearchFieldLabels()}
+  />
+</IndexBar>
+```
+
+A search box with filters and nothing else is just `SearchField`. See [components](/api/components) for each part's props.

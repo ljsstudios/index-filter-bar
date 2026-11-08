@@ -1,0 +1,33 @@
+---
+title: Overview
+description: "Every filter type the Shopify admin has, and where to compare each one in the admin."
+---
+
+Every filter is a `FilterField`. Its `kind` picks the type; a field without one is a list. Its `operators` are the conditions the merchant can choose, the first being the default.
+
+The bar hands back filters as `{ field, operator, values, shape? }`. `values` is always strings; what they hold depends on the type.
+
+| Type | The merchant… | Compare in the admin |
+| --- | --- | --- |
+| [List](/filter-types/list) | ticks one value or several | Products → Vendor, Status, Tag |
+| [Number](/filter-types/number) | types a number, or a range | Inventory → Available, On hand |
+| [Date](/filter-types/date) | picks a preset, or types a date or range | Orders → Date, Fulfill by |
+| [Text](/filter-types/text) | types a value | Orders → Credit card (last 4 digits) |
+| [Currency](/filter-types/currency) | types an amount, the currency before it | Orders → Order total |
+| [Measurement](/filter-types/measurement) | types an amount, the unit after it | Orders → Total product weight |
+| [Read-only](/filter-types/read-only) | can only remove it | Purchase orders → Product variant |
+
+All of them are in the [demo](https://ljsstudios.github.io/index-filter-bar/), and its field configs are in [`demo/lib/fields.ts`](https://github.com/ljsstudios/index-filter-bar/blob/main/demo/lib/fields.ts).
+
+## Conditions
+
+Each condition has a `value` (yours), a `label` for the condition menu ("Is not"), and a `chipLabel` for the chip ("Vendor is not"):
+
+```ts
+operators: [
+  { value: "is", label: "Is", chipLabel: "Vendor is" },
+  { value: "is_not", label: "Is not", chipLabel: "Vendor is not" },
+],
+```
+
+The field list offers the first condition under the field's name and the rest by their chip labels, as the admin does: "Vendor", then "Vendor is not".

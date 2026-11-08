@@ -1,0 +1,23 @@
+---
+title: Components
+description: "The bar's parts, for your own layout."
+---
+
+Each part takes its own group of [labels](/api/labels), English by default.
+
+| Component | |
+| --- | --- |
+| `IndexBar` | The card and its row: `views`, `children` (the search) and `actions`. |
+| `SearchField` | The search field with its chips and lists: `value`, `onChange`, `fields`, `filters`, `onFiltersChange`, `usedFields`, `labels`. |
+| `ViewSwitcher` | The views button and menu: `popoverId`, `titles`, `selected`, `onSelect`, `onAction`, `readOnly`. |
+| `ColumnsPopover` | The columns and sort menu: `popoverId`, `sortOptions`, `sort`, `onSortChange`, `columns`, `onReorder`, `onToggle`. |
+| `SortPopover` | The sort button for a page without columns: `popoverId`, `sortOptions`, `sort`, `onSortChange`. |
+| `SortMenu` | The sort list alone (the fields, then the directions), for your own popover: `sortOptions`, `sort`, `onSortChange`. |
+| `ViewFiltersButton` | The "Show view filters" eye: `revealed`, `onToggle`, `labels`. |
+| `SaveControls` | Reset view and Save, with the Save menu and its shortcuts: `idPrefix`, `dirty`, `onAll`, `onReset`, `onSaveAsNew`, `onUpdate`, `readOnly`. |
+| `ViewModals` | Save as, rename, duplicate and delete: `idPrefix`, `request`, `labelFor`, `titleTaken`, `onCreate`, `onRename`, `onDuplicate`, `onDelete`, `onToast`, `onError`. |
+| `SortableHeader` | A sortable `s-table-header` label with the admin's direction tooltip: `field`, `label`, `sortSelected`, `onSort`, `numeric`, `sortType`. |
+| `Tooltip` | The admin's dark tooltip around one element: `content`. |
+| `IndexCard` | The bar's 12px card, for an empty state beside it. |
+
+`useIndexFilters` builds all of these props for you; see its source for how they connect.

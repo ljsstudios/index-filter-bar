@@ -1,0 +1,26 @@
+---
+title: Measurement
+description: "An amount, its unit after it."
+---
+
+<Frame>
+  <img src="/images/measurement.png" alt="A Total product weight is between chip reading 2.5 lb to 10 lb" />
+</Frame>
+
+A [number](/filter-types/number) with a `suffix`, starting as a range:
+
+```ts
+{
+  key: "weight",
+  name: "Total product weight",
+  kind: "number",
+  number: { minPrecision: 0, maxPrecision: 4, suffix: "lb" },
+  multi: false,
+  values: [],
+  operators: [/* Is between first, then Is greater than, Is less than, Is, Is not */],
+}
+```
+
+**Values:** plain numbers, `["2.5", "10"]`. The unit is the field's; add it when you build your query if your API needs it.
+
+**In the admin:** Orders → Total product weight.

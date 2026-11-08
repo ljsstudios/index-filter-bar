@@ -1,0 +1,36 @@
+---
+title: Installation
+description: "Add the package and its stylesheet to your app."
+---
+
+```bash
+npm install @ljsstudios/index-filter-bar
+```
+
+Import the stylesheet once, for example in your app's entry file:
+
+```ts
+import "@ljsstudios/index-filter-bar/style.css";
+```
+
+Its class names are prefixed `ifb_`, so they never meet your own.
+
+## Requirements
+
+<ResponseField name="React" type="18 or 19" required>
+  React and React DOM are peer dependencies.
+</ResponseField>
+
+<ResponseField name="Polaris 2.0 web components" type="polaris-2.0.js" required>
+  The bar is built from Polaris's `s-*` elements. A Shopify app home already loads them:
+
+  ```html
+  <script src="https://cdn.shopify.com/shopifycloud/polaris-2.0.js"></script>
+  ```
+</ResponseField>
+
+<ResponseField name="@shopify/polaris-types" type="^2.0.0">
+  Optional: types for the `s-*` elements in your own JSX.
+</ResponseField>
+
+App Bridge isn't needed. The bar's modals open and close through Polaris's own `s-modal` methods, so it works outside the Shopify admin too, as the demo does.

@@ -1,0 +1,45 @@
+---
+title: Date
+description: "Pick a preset, or type a date or a range with a calendar."
+---
+
+<Frame>
+  <img src="/images/date.png" alt="A Date is chip with a typed date and the calendar open beneath it" />
+</Frame>
+
+```ts
+{
+  key: "date",
+  name: "Date",
+  kind: "date",
+  multi: false,
+  values: [
+    { value: "today", label: "Today" },
+    { value: "past_week", label: "Last 7 days" },
+    { value: "past_month", label: "Last 30 days" },
+  ],
+  operators: [
+    { value: "is", label: "Is", chipLabel: "Date is" },
+    { value: "is_not", label: "Is not", chipLabel: "Date is not" },
+  ],
+}
+```
+
+The presets are yours to define and interpret. The list always ends with **Custom date** and **Custom range**, which turn the chip into typed dates (YYYY-MM-DD) with a calendar beneath.
+
+**Values:**
+
+| | `shape` | `values` |
+| --- | --- | --- |
+| A preset | none | `["past_week"]` |
+| A typed date | `"date"` | `["2026-11-03"]` |
+| A typed range | `"range"` | `["2026-11-03", "2026-11-12"]`, either end can be `""` |
+
+**In the admin:** Orders → Date, Fulfill by; Discounts → Start date.
+
+## How it behaves
+
+- **Typing a date:** each part moves to the next when it's full, and only a real date counts.
+- **The calendar:** follows the part in focus. Picking a day applies at once.
+- **A range:** Starting and Ending each take a date. One end alone is kept as a half range.
+- **Conditions on a range:** picking Is or Is not on a range keeps Starting as a single date.

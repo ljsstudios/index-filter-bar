@@ -1,0 +1,32 @@
+---
+title: Currency
+description: "An amount, the currency's code and symbol before it."
+---
+
+<Frame>
+  <img src="/images/currency.png" alt="An Order total is between chip reading USD $25 to USD $100" />
+</Frame>
+
+A [number](/filter-types/number) with a `prefix`. Put Is between first, so the field starts as a range, as the admin's Order total does:
+
+```ts
+{
+  key: "total",
+  name: "Order total",
+  kind: "number",
+  number: { minPrecision: 0, maxPrecision: 2, prefix: "USD $" },
+  multi: false,
+  values: [],
+  operators: [
+    { value: "between", label: "Is between", chipLabel: "Order total is between", range: true },
+    { value: "gt", label: "Is greater than", chipLabel: "Order total is greater than" },
+    { value: "lt", label: "Is less than", chipLabel: "Order total is less than" },
+    { value: "is", label: "Is", chipLabel: "Order total is" },
+    { value: "is_not", label: "Is not", chipLabel: "Order total is not" },
+  ],
+}
+```
+
+**Values:** plain amounts, `["25", "100"]`.
+
+**In the admin:** Orders → Order total.

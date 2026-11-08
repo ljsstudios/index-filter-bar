@@ -1,0 +1,45 @@
+---
+title: Number
+description: "Type a number, or two for a range."
+---
+
+<Frame>
+  <img src="/images/number.png" alt="An Available is between chip reading 5 to 20" />
+</Frame>
+
+```ts
+{
+  key: "available",
+  name: "Available",
+  kind: "number",
+  number: { minPrecision: 0, maxPrecision: 0 },
+  multi: false,
+  values: [],
+  operators: [
+    { value: "is", label: "Is", chipLabel: "Available is" },
+    { value: "between", label: "Is between", chipLabel: "Available is between", range: true },
+    { value: "gt", label: "Is greater than", chipLabel: "Available is greater than" },
+    { value: "lt", label: "Is less than", chipLabel: "Available is less than" },
+    { value: "is_not", label: "Is not", chipLabel: "Available is not" },
+  ],
+}
+```
+
+<ResponseField name="number" type="{ minPrecision, maxPrecision }" required>
+  Decimal places allowed. Only digits, a leading minus and the decimal separator can be typed.
+</ResponseField>
+
+<ResponseField name="range" type="boolean">
+  On a condition: it takes two numbers ("Is between").
+</ResponseField>
+
+**Values:** `["5"]`, or `["5", "20"]` for a range. Either end of a range can be `""` when the merchant leaves it open.
+
+**In the admin:** Inventory → Available, Incoming, On hand, Committed, Unavailable.
+
+## How it behaves
+
+- **Choosing the field:** puts the chip in with its number box focused.
+- **Applying:** typing alone applies nothing. Enter, leaving the chip or arrowing out applies the number.
+- **Ranges:** Tab moves from a range's first number to its second.
+- **Empty chips:** a chip left without a number is dropped.
