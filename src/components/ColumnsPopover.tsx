@@ -20,19 +20,12 @@ import { type KeyboardEvent as ReactKeyboardEvent, useRef, useState } from "reac
 import { useOverlayEvents } from "../internal/useOverlayEvents";
 import { defaultLabels, format, type IndexFilterBarLabels } from "../labels";
 import styles from "./ColumnsPopover.module.css";
+import { SortMenu, type SortOption } from "./SortPopover";
 
 export interface ColumnsPopoverColumn {
   key: string;
   label: string;
   visible: boolean;
-}
-
-export interface SortOption {
-  field: string;
-  label: string;
-  /** The direction labels for this field, e.g. A-Z / Z-A. */
-  ascLabel: string;
-  descLabel: string;
 }
 
 interface ColumnsPopoverProps {
@@ -145,7 +138,7 @@ export const ColumnsPopover = ({
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
   );
 
-  const [field = "", direction = "asc"] = sort.split(" ");
+  const [field = ""] = sort.split(" ");
   const current = sortOptions.find((option) => option.field === field) ?? sortOptions[0];
 
   // What a screen reader hears while a column is moved by the keys, in the
@@ -241,25 +234,29 @@ export const ColumnsPopover = ({
         >
           {panel === "main" ? (
             <>
-              <div className={styles.section}>
-                <div className={styles.sortRow}>
-                  <span className={styles.labelGroup}>
-                    <s-icon type="sort"></s-icon>
-                    {labels.sortBy}
-                  </span>
-                  <button
-                    type="button"
-                    className={styles.actionButton}
-                    data-parity="sort-button"
-                    aria-label={format(labels.sortByNamed, { sort: current?.label ?? "" })}
-                    onClick={() => setPanel("sort")}
-                  >
-                    {current?.label}
-                    <s-icon type="select"></s-icon>
-                  </button>
-                </div>
-              </div>
-              <div className={styles.divider} />
+              {sortOptions.length > 0 && (
+                <>
+                  <div className={styles.section}>
+                    <div className={styles.sortRow}>
+                      <span className={styles.labelGroup}>
+                        <s-icon type="sort"></s-icon>
+                        {labels.sortBy}
+                      </span>
+                      <button
+                        type="button"
+                        className={styles.actionButton}
+                        data-parity="sort-button"
+                        aria-label={format(labels.sortByNamed, { sort: current?.label ?? "" })}
+                        onClick={() => setPanel("sort")}
+                      >
+                        {current?.label}
+                        <s-icon type="select"></s-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <div className={styles.divider} />
+                </>
+              )}
               <div className={styles.section}>
                 <div className={styles.columns}>
                   <span className={styles.columnsLabel} data-parity="columns-label">
@@ -301,44 +298,7 @@ export const ColumnsPopover = ({
                 </button>
               </div>
               <div className={styles.divider} />
-              <div className={styles.panelSection} role="menu">
-                {sortOptions.map((option) => (
-                  <button
-                    key={option.field}
-                    type="button"
-                    role="menuitemradio"
-                    aria-checked={option.field === current?.field}
-                    className={styles.option}
-                    data-parity={
-                      option.field === current?.field ? "sort-option-current" : "sort-option"
-                    }
-                    onClick={() => onSortChange(`${option.field} ${direction}`)}
-                  >
-                    <span className={styles.tick} data-hidden={option.field !== current?.field}>
-                      <s-icon type="check"></s-icon>
-                    </span>
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-              <div className={styles.divider} />
-              <div className={styles.panelSection} role="menu">
-                {(["asc", "desc"] as const).map((dir) => (
-                  <button
-                    key={dir}
-                    type="button"
-                    role="menuitemradio"
-                    aria-checked={dir === direction}
-                    className={styles.option}
-                    onClick={() => onSortChange(`${current?.field ?? field} ${dir}`)}
-                  >
-                    <span className={styles.tick} data-hidden={dir !== direction}>
-                      <s-icon type="check"></s-icon>
-                    </span>
-                    {dir === "asc" ? current?.ascLabel : current?.descLabel}
-                  </button>
-                ))}
-              </div>
+              <SortMenu sortOptions={sortOptions} sort={sort} onSortChange={onSortChange} />
             </>
           )}
         </div>

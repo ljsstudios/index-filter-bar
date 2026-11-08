@@ -41,6 +41,17 @@
   padding: 8px 6px;
 }
 
+/* The sort button's own list (Segments): as wide as its words, 142px at
+   the least, the admin's. */
+.sortPane {
+  width: max-content;
+  min-width: 142px;
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: -0.13px;
+  color: #101010;
+}
+
 .divider {
   height: 1px;
   background: #f2f2f2;

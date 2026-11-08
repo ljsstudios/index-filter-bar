@@ -3,11 +3,7 @@
  * bar for embedded apps on Polaris 2.0 web components.
  */
 
-export {
-  ColumnsPopover,
-  type ColumnsPopoverColumn,
-  type SortOption,
-} from "./components/ColumnsPopover";
+export { ColumnsPopover, type ColumnsPopoverColumn } from "./components/ColumnsPopover";
 export { IndexBar, IndexCard } from "./components/IndexBar";
 export { SaveControls } from "./components/SaveControls";
 export {
@@ -17,6 +13,7 @@ export {
   toSearchFieldLabels,
 } from "./components/SearchField";
 export { parseSortField, SortableHeader } from "./components/SortableHeader";
+export { SortMenu, type SortOption, SortPopover } from "./components/SortPopover";
 export { Tooltip } from "./components/Tooltip";
 export { ViewFiltersButton } from "./components/ViewFiltersButton";
 export { type ViewModalKind, type ViewModalRequest, ViewModals } from "./components/ViewModals";

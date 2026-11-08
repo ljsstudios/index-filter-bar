@@ -2,6 +2,7 @@ import { ColumnsPopover } from "./components/ColumnsPopover";
 import { IndexBar } from "./components/IndexBar";
 import { SaveControls } from "./components/SaveControls";
 import { SearchField } from "./components/SearchField";
+import { SortPopover } from "./components/SortPopover";
 import { ViewFiltersButton } from "./components/ViewFiltersButton";
 import { ViewModals } from "./components/ViewModals";
 import { ViewSwitcher } from "./components/ViewSwitcher";
@@ -21,6 +22,7 @@ export const IndexFilterBar = ({
   readOnly,
   views,
   search,
+  sort,
   columns,
   viewFilters,
   save,
@@ -46,12 +48,21 @@ export const IndexFilterBar = ({
           {columns && (
             <ColumnsPopover
               popoverId={`${id}-columns`}
-              sortOptions={columns.sortOptions}
-              sort={columns.sort}
-              onSortChange={columns.onSortChange}
+              sortOptions={sort?.options ?? []}
+              sort={sort?.value ?? ""}
+              onSortChange={sort?.onChange ?? (() => {})}
               columns={columns.columns}
               onReorder={columns.onReorder}
               onToggle={columns.onToggle}
+              labels={labels.columns}
+            />
+          )}
+          {!columns && sort && (
+            <SortPopover
+              popoverId={`${id}-sort`}
+              sortOptions={sort.options}
+              sort={sort.value}
+              onSortChange={sort.onChange}
               labels={labels.columns}
             />
           )}

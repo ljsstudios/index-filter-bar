@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { ColumnsPopoverColumn, SortOption } from "./components/ColumnsPopover";
+import type { ColumnsPopoverColumn } from "./components/ColumnsPopover";
 import { toSearchFieldLabels } from "./components/SearchField";
+import type { SortOption } from "./components/SortPopover";
 import type { ViewModalKind, ViewModalRequest } from "./components/ViewModals";
 import type { ViewAction } from "./components/ViewSwitcher";
 import type { FilterField } from "./filters/types";
@@ -346,12 +347,10 @@ export const useIndexFilters = ({
       usedFields,
       labels: searchLabels,
     },
+    sort: sortOptions.length > 0 ? { options: sortOptions, value: sort, onChange: setSort } : null,
     columns:
-      sortOptions.length > 0 || pageColumns.length > 0
+      pageColumns.length > 0
         ? {
-            sortOptions,
-            sort,
-            onSortChange: setSort,
             columns: popoverColumns,
             onReorder: (order) => setColumns((c) => ({ ...c, order })),
             onToggle: (key) =>
@@ -439,10 +438,10 @@ export interface IndexFilterBarProps {
     usedFields: string[];
     labels: ReturnType<typeof toSearchFieldLabels>;
   };
+  /** The sort list: in the columns menu when there are columns, else on its own button. */
+  sort: { options: SortOption[]; value: string; onChange: (sort: string) => void } | null;
+  /** The columns menu; null when the page gives no columns. */
   columns: {
-    sortOptions: SortOption[];
-    sort: string;
-    onSortChange: (sort: string) => void;
     columns: ColumnsPopoverColumn[];
     onReorder: (order: string[]) => void;
     onToggle: (key: string) => void;

@@ -1,4 +1,4 @@
-import { act, cleanup, render, renderHook } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { FilterField } from "../filters/types";
 import { IndexFilterBar } from "../IndexFilterBar";
@@ -261,6 +261,55 @@ describe("IndexFilterBar", () => {
     expect(getByRole("button", { name: "Display options" })).toBeTruthy();
     expect(getByRole("button", { name: "Show view filters" })).toBeTruthy();
     expect(await axeViolations(container)).toEqual([]);
+  });
+
+  it("draws a sort-only button without columns, its list ticked, and axe finds nothing", async () => {
+    const { container, getByRole, queryByRole } = render(
+      <Page options={{ ...OPTIONS, columns: undefined, savedViews: false }} />,
+    );
+    expect(queryByRole("button", { name: "Display options" })).toBeNull();
+    const trigger = getByRole("button", { name: "Sort by" });
+    expect(trigger.getAttribute("aria-haspopup")).toBe("menu");
+    const pane = container.querySelector('[data-parity="sort-pane"]') as HTMLElement;
+    const checked = [...pane.querySelectorAll('[aria-checked="true"]')].map((b) => b.textContent);
+    expect(checked).toEqual(["Title", "A-Z"]);
+    act(() => (pane.querySelectorAll('[role="menuitemradio"]')[1] as HTMLElement).click());
+    expect(search().get("sort")).toBe("created asc");
+    expect(await axeViolations(container)).toEqual([]);
+  });
+
+  it("moves through both sort groups with the arrow keys", () => {
+    const { container } = render(<Page options={{ ...OPTIONS, columns: undefined }} />);
+    const items = [
+      ...container.querySelectorAll<HTMLElement>(
+        '[data-parity="sort-pane"] [role="menuitemradio"]',
+      ),
+    ];
+    items[1]?.focus();
+    fireEvent.keyDown(items[1] as HTMLElement, { key: "ArrowDown" });
+    expect(document.activeElement?.textContent).toBe("A-Z");
+    fireEvent.keyDown(document.activeElement as HTMLElement, { key: "End" });
+    expect(document.activeElement?.textContent).toBe("Z-A");
+    fireEvent.keyDown(document.activeElement as HTMLElement, { key: "Home" });
+    expect(document.activeElement?.textContent).toBe("Title");
+  });
+
+  it("drops the Sort by row from the columns menu without sort options", () => {
+    const { container, getByRole, queryByRole } = render(
+      <Page options={{ ...OPTIONS, sortOptions: undefined }} />,
+    );
+    expect(getByRole("button", { name: "Display options" })).toBeTruthy();
+    expect(queryByRole("button", { name: "Sort by" })).toBeNull();
+    expect(container.querySelector('[data-parity="sort-button"]')).toBeNull();
+    expect(container.querySelector('[data-parity="column-row"]')).not.toBeNull();
+  });
+
+  it("draws no right-hand button without sort options or columns", () => {
+    const { queryByRole } = render(
+      <Page options={{ ...OPTIONS, sortOptions: undefined, columns: undefined }} />,
+    );
+    expect(queryByRole("button", { name: "Display options" })).toBeNull();
+    expect(queryByRole("button", { name: "Sort by" })).toBeNull();
   });
 
   it("draws no views button, Save or modals without saved views", async () => {
