@@ -1,18 +1,29 @@
 # Search & Filters Bar
 
+[![npm](https://img.shields.io/npm/v/@ljsstudios/index-filter-bar)](https://www.npmjs.com/package/@ljsstudios/index-filter-bar)
+[![CI](https://github.com/ljsstudios/index-filter-bar/actions/workflows/ci.yml/badge.svg)](https://github.com/ljsstudios/index-filter-bar/actions/workflows/ci.yml)
+[![MIT](https://img.shields.io/badge/licence-MIT-blue)](LICENSE)
+
 The Shopify admin's index search and filter bar, for embedded Shopify apps built with React and **Polaris 2.0 web components** (`polaris-2.0.js`, the `s-*` elements). It is not for the older Polaris React library (`@shopify/polaris`).
 
+![The bar: a saved view, a Vendor filter chip, the columns button, the view filters eye, Reset and Save](https://raw.githubusercontent.com/ljsstudios/index-filter-bar/main/documentation/images/bar.png)
+
+**[Documentation](https://index-filter-bar.mintlify.site)** · **[Live demo](https://ljsstudios.github.io/index-filter-bar/)** · [npm](https://www.npmjs.com/package/@ljsstudios/index-filter-bar)
+
+## What's included
+
 - **Every filter type the admin has:** list, number, date, text, currency, measurement and read-only.
-- **Saved views** with Reset, Save, Update and Save as new. The "Show view filters" eye hides a view's own filters until it's needed.
-- **Columns and sort:** reorder, hide and sort columns from the admin's columns menu.
-- **The URL:** search, filters, sort and view are kept in readable params, so a refresh or a shared link lands on the same list.
-- **Long value lists** load 25 at a time, from the page or a server.
-- **Accessible:** named controls, announced filter changes, full keyboard use, and axe-checked against WCAG 2.2 AA.
+- **Saved views** with Reset, Save, Update and Save as new. The "Show view filters" eye hides a view's own filters until they're needed.
+- **Columns and sort:** reorder, hide and sort columns from the admin's columns menu, or use a sort button on its own.
+- **Choosing the parts:** saved views, sort, columns and filters are each optional, so a page can be as simple as the admin's Segments.
+- **The URL:** search, filters, sort and view live in readable params, so a refresh or a shared link lands on the same list.
+- **Long value lists** load 25 at a time, either from the page or from your server.
+- **Accessible:** named controls, announced filter changes and full keyboard use, checked with axe against WCAG 2.2 AA.
 - **Languages:** English, German, Spanish and French built in, and any other through a labels object.
 
 It's matched to the admin's look and behaviour element by element, measured against the live admin.
 
-**[Live demo](https://ljsstudios.github.io/index-filter-bar/)**: Products, Inventory, Orders and Segments pages on sample data. **[Documentation](https://index-filter-bar.mintlify.site)**.
+The demo has four pages on sample data, each copying an admin page: Products, Inventory, Orders and Segments.
 
 ## Install
 
@@ -31,9 +42,10 @@ Requirements:
 
 ## Quick start
 
+**1. Describe the filters, sorts and columns.**
+
 ```tsx
-import { IndexFilterBar, useIndexFilters, type FilterField } from "@ljsstudios/index-filter-bar";
-import "@ljsstudios/index-filter-bar/style.css";
+import type { FilterField } from "@ljsstudios/index-filter-bar";
 
 const fields: FilterField[] = [
   {
@@ -51,34 +63,58 @@ const fields: FilterField[] = [
   },
 ];
 
-export const ProductsPage = () => {
-  const bar = useIndexFilters({
-    fields,
-    sortOptions: [{ field: "title", label: "Title", ascLabel: "A-Z", descLabel: "Z-A" }],
-    columns: [
-      { key: "vendor", label: "Vendor" },
-      { key: "status", label: "Status" },
-    ],
-  });
+const sortOptions = [{ field: "title", label: "Title", ascLabel: "A-Z", descLabel: "Z-A" }];
 
-  // Send bar.query, bar.filters and bar.sort to your API, and show bar.visibleColumns.
+const columns = [
+  { key: "vendor", label: "Vendor" },
+  { key: "status", label: "Status" },
+];
+```
+
+**2. Draw the bar, and send its state to your API.**
+
+```tsx
+import { IndexFilterBar, useIndexFilters } from "@ljsstudios/index-filter-bar";
+import "@ljsstudios/index-filter-bar/style.css";
+
+export const ProductsPage = () => {
+  const bar = useIndexFilters({ fields, sortOptions, columns });
+
+  // Your own data fetching: send the search, filters and sort.
   const { data, isFetching } = useProducts(bar.query, bar.filters, bar.sort);
 
   return (
     <s-page heading="Products">
       <IndexFilterBar {...bar.props} />
-      <s-table loading={isFetching || bar.pending}>{/* … */}</s-table>
+      <s-table loading={isFetching || bar.pending}>
+        {/* one column per key in bar.visibleColumns */}
+      </s-table>
     </s-page>
   );
 };
 ```
+
+**3. Keep saved views** (optional). Pass the stored views in, and store them when they change:
+
+```tsx
+const bar = useIndexFilters({
+  fields,
+  sortOptions,
+  columns,
+  views: shop.savedViews, // All first
+  onViewsChange: (views) => api.saveViews(views), // return a promise
+  onToast: (message) => shopify.toast.show(message),
+});
+```
+
+Without a store, `localStorageViews(key, defaults)` keeps them in the browser, and `savedViews: false` leaves views out altogether.
 
 The hook returns:
 
 | | |
 | --- | --- |
 | `query` | The search text to send, 400ms after the last key (the admin's delay). |
-| `pending` | True while typed text waits out that delay: `loading={isFetching \|\| bar.pending}` shows loading from the first key. |
+| `pending` | True while typed text waits out that delay, so `loading={isFetching \|\| bar.pending}` shows loading from the first key. |
 | `filters` | The filters to apply: `{ field, operator, values, shape? }[]`. |
 | `sort` | `"field direction"`, for example `"title asc"`. |
 | `visibleColumns` | Column keys to show, in the merchant's order. |
@@ -86,9 +122,11 @@ The hook returns:
 | `hasFilters`, `clear()` | For an empty state's "Clear search and filters". |
 | `props` | Spread into `<IndexFilterBar>`. |
 
+The [quickstart](https://index-filter-bar.mintlify.site/quickstart) walks through a whole page.
+
 ## Filter types
 
-Each type is a `FilterField`. Where to compare it in the Shopify admin is in the last column.
+Each type is a `FilterField`. The last column says where to see it in the Shopify admin.
 
 | Type | What the merchant does | Admin example |
 | --- | --- | --- |
@@ -102,24 +140,19 @@ Each type is a `FilterField`. Where to compare it in the Shopify admin is in the
 
 See [filter types](https://index-filter-bar.mintlify.site/filter-types/overview) for each type's config, its conditions, and what its values look like.
 
-## Saved views
+## Choosing the parts
 
-Views are the merchant's named combinations of search, filters, sort and columns. All comes first and is the page's own default. Pass the stored views in, and store them when they change:
+Each part shows only when the page gives it what it needs:
 
-```tsx
-const bar = useIndexFilters({
-  fields,
-  views: shop.savedViews, // All first
-  onViewsChange: (views) => api.saveViews(views), // return a promise
-  onToast: (message) => shopify.toast.show(message),
-});
-```
+| The page gives | The bar draws |
+| --- | --- |
+| Everything | Views, search with filters, the columns menu, Reset and Save |
+| `savedViews: false` | No views button, Reset, Save, eye or save modals |
+| `sortOptions`, no `columns` | A sort button opening the sort list on its own |
+| `columns`, no `sortOptions` | The columns menu without its Sort by row |
+| No `fields` | A plain search box |
 
-The save modals keep their spinner until the promise settles. A rejected promise keeps the modal open with an error banner. For prototypes, `localStorageViews(key, defaults)` keeps them in the browser. See [saved views](https://index-filter-bar.mintlify.site/guides/saved-views).
-
-## Long value lists
-
-A list shows its values 25 at a time and adds 25 more each time it's scrolled to the end, as the admin's do. When the values live on your server, give the field `fetchMoreValues(search)` and `hasNextPage`. The bar fetches the first page when the list opens empty, the next page at the end of the list, and a search 250ms after typing, with a loading row meanwhile. See [long lists](https://index-filter-bar.mintlify.site/filter-types/long-lists).
+See [choosing the parts](https://index-filter-bar.mintlify.site/guides/customising).
 
 ## Languages
 
@@ -133,29 +166,9 @@ const bar = useIndexFilters({ fields, labels: de });
 
 Change single words with `mergeLabels({ views: { all: "Everything" } })`. See [languages](https://index-filter-bar.mintlify.site/guides/languages).
 
-## Accessibility
-
-Checked with axe (WCAG 2.2 AA) in the test suite and on the demo pages, and spot-checked with VoiceOver.
-- **The search field:** a combobox with keyboard help.
-- **The lists:** named for what they hold, with multi-select values marked selected.
-- **Typed values:** named textboxes, such as "Order total (USD $), minimum".
-- **Announcements:** each filter added, changed or removed is said.
-- **Menus:** the views and Save menus move with the arrow keys, and columns reorder from the keyboard.
-- **Targets:** remove buttons take clicks across 24px.
-
-Two choices differ from the admin for WCAG:
-- typed-value hints are drawn darker (4.5:1 contrast);
-- the admin's field is a plain textbox, ours a combobox.
-
-Keyboard reference: [keyboard](https://index-filter-bar.mintlify.site/guides/keyboard).
-
-## Choosing the parts
-
-Each part shows only when the page gives it what it needs: `savedViews: false` drops the views button, Reset, Save and the eye; sort options without columns give a sort button of its own; no `fields` gives a plain search. See [choosing the parts](https://index-filter-bar.mintlify.site/guides/customising).
-
 ## Lower-level parts
 
-`IndexFilterBar` is the parts below, laid out as the admin's. Use them directly for your own layout:
+`IndexFilterBar` is built from the parts below, laid out as the admin lays them out. Use them directly for your own layout:
 - `IndexBar`
 - `ViewSwitcher`
 - `SearchField`
@@ -166,13 +179,13 @@ Each part shows only when the page gives it what it needs: `savedViews: false` d
 - `ViewModals`
 - `SortableHeader`, for `s-table` headers
 
-The pure helpers are exported too: `splitViewFilters`, `encodeFilters`, `decodeFilters`, `readSavedViews`, `reconcileColumns`. See [helpers](https://index-filter-bar.mintlify.site/api/helpers).
+The pure helpers are exported too: `splitViewFilters`, `encodeFilters`, `decodeFilters`, `readSavedViews` and `reconcileColumns`. See the [API reference](https://index-filter-bar.mintlify.site/api/use-index-filters).
 
 ## Known limits
 
 - **Icon hover colour:** Polaris icons come in fixed colours, so the bar's icons don't darken on hover as the admin's do.
 - **Critical red:** "Delete view" uses Polaris's critical tone, a shade brighter than the admin's.
-- **Currency picker:** the admin's code has a currency picker for fields offering several currencies, but no admin page uses it, so it's left out.
+- **Currency picker:** the admin's code has a currency picker for fields that offer several currencies. No admin page uses it, so it's left out.
 
 ## Development
 
@@ -183,7 +196,7 @@ pnpm check       # typecheck, lint, knip, tests
 pnpm build       # dist/
 ```
 
-The demo's products come from [mock.shop](https://mock.shop), Shopify's free sample Storefront API (`pnpm data:fetch`). Stock and orders are generated from them (`pnpm data:generate`). See [CONTRIBUTING.md](CONTRIBUTING.md).
+The demo's products come from [mock.shop](https://mock.shop), Shopify's free sample Storefront API (`pnpm data:fetch`). Stock and orders are generated from them (`pnpm data:generate`). The docs live in `documentation/` (Mintlify). See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licence
 
