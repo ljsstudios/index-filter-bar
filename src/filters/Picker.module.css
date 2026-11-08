@@ -1,0 +1,170 @@
+/* The admin's bar picker: a popover holding the field list or a chip's
+   values and conditions, matched to the admin's measured styles. */
+
+/* Inside the bar, so it moves with it when the page scrolls. */
+.popover {
+  position: absolute;
+  z-index: 520;
+  min-width: 200px;
+  max-width: 300px;
+  border-radius: 16px;
+  background: #ffffff;
+  overflow: hidden;
+  box-shadow:
+    rgba(0, 0, 0, 0.06) 0 2px 2px -1px,
+    rgba(0, 0, 0, 0.06) 0 3px 4px -2px,
+    rgba(0, 0, 0, 0.06) 0 6px 8px -3px,
+    rgba(0, 0, 0, 0.06) 0 12px 16px -4px,
+    rgba(0, 0, 0, 0.08) 0 0 0 1px;
+  color: #101010;
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: -0.13px;
+  /* On <body>, outside the page's type: the admin's sans stack, smoothed. */
+  font-family:
+    ShopifyInter,
+    "Noto Sans Arabic",
+    "Noto Sans Hebrew",
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.pane {
+  max-height: 292px;
+  overflow-y: auto;
+}
+
+/* Polaris' spacious scrollbar (Polaris-Scroll--spacious): a 16px track that
+   takes room, so rows stop short of it, and a round thumb inset 6px. */
+.pane::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+.pane::-webkit-scrollbar-thumb {
+  border: 6px solid transparent;
+  border-radius: 9999px;
+  background-color: #a6a6a6;
+  background-clip: content-box;
+}
+
+.pane:hover::-webkit-scrollbar-thumb {
+  background-color: #8c8c8c;
+}
+
+.pane::-webkit-scrollbar-thumb:hover,
+.pane::-webkit-scrollbar-thumb:active {
+  background-color: #606060;
+}
+
+.pane::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.list {
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+}
+
+.divider {
+  height: 1px;
+  background: #f2f2f2;
+}
+
+.row {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  border-radius: 12px;
+}
+
+.row[data-active] {
+  background: #f7f7f7;
+}
+
+.rowContent {
+  position: relative;
+  display: flex;
+  flex: 1 1;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+/* "No options available": secondary text, no pointer (measured in the admin). */
+.row[aria-disabled="true"] .rowContent {
+  color: rgb(74, 74, 74);
+  cursor: default;
+}
+
+.prefix {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  margin-inline-start: -2px;
+}
+
+.tickPrefix {
+  display: flex;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-inline-start: -2px;
+}
+
+.label {
+  flex: 1 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.row[aria-selected="true"] .label {
+  font-weight: 500;
+}
+
+/* A tick before unchosen single-pick values shows grey (the subdued icon,
+   #606060) on the active row. */
+.tick[data-hidden="true"] {
+  visibility: hidden;
+}
+
+.row[data-active] .tick[data-hidden="true"] {
+  visibility: visible;
+}
+
+/* The Enter keycap at the end of the active row. */
+.hint {
+  display: none;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 2px;
+  margin-inline-start: 4px;
+  padding: 1px 4px;
+  border: 1px solid #dddddd;
+  border-radius: 6px;
+  background: #f2f2f2;
+  color: rgb(74, 74, 74);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.row[data-active] .hint {
+  display: inline-flex;
+}
+
+.hintIcon {
+  display: flex;
+  width: 16px;
+  height: 16px;
+}

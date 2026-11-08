@@ -1,0 +1,53 @@
+/* Sortable header hover pattern */
+.sortableHeader {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--p-space-100);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.sortableHeader .sortIcon,
+.sortableHeader .sortIconActive {
+  /* The 20px icon sits in the 18px line without growing it, so the header
+     row stays the admin's 31px (6px padding, 18px line, 1px border). */
+  display: flex;
+  align-items: center;
+  height: 18px;
+}
+
+.sortableHeader .sortIcon {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.sortableHeader:hover .sortIcon,
+.sortableHeader .sortIconActive {
+  opacity: 1;
+}
+
+/*
+ * Numeric alignment for sortable headers. The base is `inline-flex`, which
+ * shrink-wraps and leaves `justify-content` inert — Polaris' `format="numeric"`
+ * right-aligns plain header text but can't push an inline-flex box, so the label
+ * drifted left of the right-aligned values. Going full-width `flex` lets
+ * `justify-content: flex-end` pin the label to the column's trailing edge.
+ */
+.sortableHeaderNumeric {
+  composes: sortableHeader;
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+/*
+ * Numeric columns are right-aligned, so put the sort arrow to the LEFT of the
+ * label. That keeps the label flush with the column's trailing edge, lining it
+ * up with the right-aligned cell values (otherwise the icon reserves space to
+ * the right of the label and the header drifts left of the values).
+ */
+.sortableHeaderNumeric .sortIcon,
+.sortableHeaderNumeric .sortIconActive {
+  order: -1;
+}

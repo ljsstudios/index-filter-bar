@@ -1,0 +1,91 @@
+{
+  "search": {
+    "placeholder": "Suchen und filtern",
+    "clear": "Löschen",
+    "removeFilter": "Filter entfernen",
+    "enter": "Enter",
+    "fieldList": "Filter",
+    "more": " + {count} weitere",
+    "noOptions": "Keine Optionen verfügbar",
+    "addFilter": "Neuen Filter hinzufügen",
+    "customDate": "Benutzerdefiniertes Datum",
+    "customRange": "Benutzerdefinierter Zeitraum",
+    "starting": "Beginn",
+    "ending": "Ende"
+  },
+  "a11y": {
+    "help": "Tippen, um zu suchen. Mit den Pfeiltasten zwischen Filtern wechseln. Mit der Rücktaste einen Filter entfernen.",
+    "remove": "{chip} entfernen",
+    "values": "Werte für {field}",
+    "condition": "Bedingung für {field}",
+    "minimum": "Minimum",
+    "maximum": "Maximum",
+    "year": "Jahr",
+    "month": "Monat",
+    "day": "Tag",
+    "added": "Filter hinzugefügt: {chip}",
+    "changed": "Filter geändert: {chip}",
+    "removed": "Filter entfernt: {chip}",
+    "chipHint": "{chip}. Mit der Rücktaste entfernen."
+  },
+  "operators": {
+    "is": "Ist",
+    "isNot": "Ist nicht",
+    "between": "Ist zwischen",
+    "greaterThan": "Ist größer als",
+    "lessThan": "Ist kleiner als"
+  },
+  "views": {
+    "all": "Alle",
+    "switch": "Ansicht wechseln",
+    "actions": "Aktionen für {name}",
+    "rename": "Ansicht umbenennen",
+    "duplicate": "Ansicht duplizieren",
+    "delete": "Ansicht löschen",
+    "resetView": "Ansicht zurücksetzen",
+    "save": "Speichern",
+    "updateView": "Ansicht aktualisieren",
+    "saveAsNew": "Als neue Ansicht speichern",
+    "showViewFilters": "Ansichtsfilter anzeigen",
+    "hideViewFilters": "Ansichtsfilter ausblenden"
+  },
+  "viewModals": {
+    "saveAsHeading": "Ansicht speichern unter",
+    "viewNameLabel": "Name der Ansicht",
+    "nameLabel": "Name",
+    "nameTaken": "Eine Ansicht mit diesem Namen gibt es bereits.",
+    "copyOf": "Kopie von {name}",
+    "createView": "Ansicht erstellen",
+    "save": "Speichern",
+    "discard": "Verwerfen",
+    "cancel": "Abbrechen",
+    "deleteHeading": "Ansicht löschen?",
+    "deleteBody": "Das kann nicht rückgängig gemacht werden. Die Ansicht {name} ist danach in deinem Admin nicht mehr verfügbar.",
+    "saveFailed": "Die Ansicht konnte nicht gespeichert werden. Versuche es erneut.",
+    "createdToast": "Ansicht erstellt",
+    "renamedToast": "Ansicht umbenannt",
+    "deletedToast": "Ansicht gelöscht"
+  },
+  "columns": {
+    "displayOptions": "Anzeigeoptionen",
+    "sortBy": "Sortieren nach",
+    "sortByNamed": "Sortieren nach {sort}",
+    "columns": "Spalten",
+    "show": "Anzeigen",
+    "hide": "Ausblenden",
+    "reorder": "{column} verschieben",
+    "dragInstructions": "Um eine Spalte zu verschieben, Leertaste oder Eingabetaste drücken, mit den Pfeiltasten nach oben und unten bewegen und mit Leertaste oder Eingabetaste ablegen oder mit Escape abbrechen.",
+    "pickedUp": "{column} aufgenommen.",
+    "movedTo": "{column} auf Position {position} von {total} verschoben.",
+    "dropped": "{column} auf Position {position} von {total} abgelegt.",
+    "cancelled": "Verschieben von {column} abgebrochen."
+  },
+  "sort": {
+    "aToZ": "A-Z",
+    "zToA": "Z-A",
+    "lowToHigh": "Niedrigste zuerst",
+    "highToLow": "Höchste zuerst",
+    "oldestFirst": "Älteste zuerst",
+    "newestFirst": "Neueste zuerst"
+  }
+}

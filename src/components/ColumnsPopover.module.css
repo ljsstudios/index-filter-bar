@@ -1,0 +1,222 @@
+/* The admin's display options: the columns button and its popover. */
+
+.trigger {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 4px;
+  border-radius: 9999px;
+  color: #606060;
+  cursor: pointer;
+}
+
+.trigger:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.trigger:active,
+.trigger[data-active] {
+  background: rgba(0, 0, 0, 0.13);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: 1px;
+}
+
+.pane {
+  width: 276px;
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: -0.13px;
+  color: #101010;
+}
+
+.section {
+  padding: 8px 6px;
+}
+
+.divider {
+  height: 1px;
+  background: #f2f2f2;
+}
+
+/* Sort by: icon and label, the current sort at the end. */
+.sortRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 24px;
+  padding-inline-start: 2px;
+}
+
+.labelGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.actionButton {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 24px;
+  padding: 2px 0 2px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.actionButton:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.actionButton:focus-visible {
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: 1px;
+}
+
+/* Columns: the subdued medium label, then the rows 2px apart. */
+.columns {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.columnsLabel {
+  padding-inline-start: 4px;
+  color: rgb(74, 74, 74);
+  font-weight: 500;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.row {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 24px;
+  padding: 2px 2px 2px 0;
+  border-radius: 4px;
+  cursor: grab;
+  touch-action: none;
+}
+
+.row:focus-visible {
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: -2px;
+}
+
+.row[data-dragging] {
+  cursor: grabbing;
+  opacity: 0.6;
+}
+
+.row[data-hidden] .rowLabel {
+  color: rgb(74, 74, 74);
+}
+
+.visibility {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* WCAG 2.5.8: a 24px hit area around the 20px eye, drawn nothing. */
+.visibility::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+}
+
+.visibility:focus-visible {
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: 1px;
+}
+
+/* The sort panel, in place of the main one: a Back row, then the fields
+   and the directions as the admin's listbox options. */
+.panelSection {
+  padding: 4px;
+}
+
+.option {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  height: 28px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: #f2f2f2;
+}
+
+.option:focus-visible {
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: -2px;
+}
+
+.option[aria-checked="true"] {
+  font-weight: 600;
+}
+
+.tick {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+}
+
+/* Unchosen ticks are there but clear; a hovered row shows its tick at
+   half strength, as the admin's listbox does. */
+.tick[data-hidden="true"] {
+  opacity: 0;
+}
+
+.option:hover .tick[data-hidden="true"] {
+  opacity: 0.5;
+}
+
+/* The drag handle: the keyboard's way to reorder a column, drawn as the
+   admin's plain icon. */
+.handle {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: grab;
+}
+
+.handle:focus-visible {
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: 1px;
+}

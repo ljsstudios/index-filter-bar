@@ -1,0 +1,91 @@
+{
+  "search": {
+    "placeholder": "Search and filter",
+    "clear": "Clear",
+    "removeFilter": "Remove filter",
+    "enter": "Enter",
+    "fieldList": "Filters",
+    "more": " + {count} more",
+    "noOptions": "No options available",
+    "addFilter": "Add new filter",
+    "customDate": "Custom date",
+    "customRange": "Custom range",
+    "starting": "Starting",
+    "ending": "Ending"
+  },
+  "a11y": {
+    "help": "Type to search. Arrow keys move between filters. Backspace removes a filter.",
+    "remove": "Remove {chip}",
+    "values": "{field} values",
+    "condition": "{field} condition",
+    "minimum": "minimum",
+    "maximum": "maximum",
+    "year": "year",
+    "month": "month",
+    "day": "day",
+    "added": "Filter added: {chip}",
+    "changed": "Filter changed: {chip}",
+    "removed": "Filter removed: {chip}",
+    "chipHint": "{chip}. Backspace removes it."
+  },
+  "operators": {
+    "is": "Is",
+    "isNot": "Is not",
+    "between": "Is between",
+    "greaterThan": "Is greater than",
+    "lessThan": "Is less than"
+  },
+  "views": {
+    "all": "All",
+    "switch": "Switch view",
+    "actions": "Actions for {name}",
+    "rename": "Rename view",
+    "duplicate": "Duplicate view",
+    "delete": "Delete view",
+    "resetView": "Reset view",
+    "save": "Save",
+    "updateView": "Update view",
+    "saveAsNew": "Save as new view",
+    "showViewFilters": "Show view filters",
+    "hideViewFilters": "Hide view filters"
+  },
+  "viewModals": {
+    "saveAsHeading": "Save view as",
+    "viewNameLabel": "View name",
+    "nameLabel": "Name",
+    "nameTaken": "A view with this name already exists.",
+    "copyOf": "Copy of {name}",
+    "createView": "Create view",
+    "save": "Save",
+    "discard": "Discard",
+    "cancel": "Cancel",
+    "deleteHeading": "Delete view?",
+    "deleteBody": "This can't be undone. {name} view will no longer be available in your admin.",
+    "saveFailed": "The view could not be saved. Try again.",
+    "createdToast": "View created",
+    "renamedToast": "View renamed",
+    "deletedToast": "View deleted"
+  },
+  "columns": {
+    "displayOptions": "Display options",
+    "sortBy": "Sort by",
+    "sortByNamed": "Sort by {sort}",
+    "columns": "Columns",
+    "show": "Show",
+    "hide": "Hide",
+    "reorder": "Reorder {column}",
+    "dragInstructions": "To move a column, press space or enter, use the up and down arrow keys, then press space or enter to drop it, or escape to cancel.",
+    "pickedUp": "Picked up {column}.",
+    "movedTo": "{column} moved to position {position} of {total}.",
+    "dropped": "{column} dropped at position {position} of {total}.",
+    "cancelled": "Moving {column} cancelled."
+  },
+  "sort": {
+    "aToZ": "A-Z",
+    "zToA": "Z-A",
+    "lowToHigh": "Lowest to highest",
+    "highToLow": "Highest to lowest",
+    "oldestFirst": "Oldest first",
+    "newestFirst": "Newest first"
+  }
+}

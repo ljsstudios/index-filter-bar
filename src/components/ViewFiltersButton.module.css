@@ -1,0 +1,31 @@
+/* The admin's "Show view filters" eye: a tertiary icon button, the same as
+   the columns button beside it. */
+
+.button {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 4px;
+  border-radius: 9999px;
+  color: #606060;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: #4a4a4a;
+}
+
+.button:active {
+  background: rgba(0, 0, 0, 0.13);
+}
+
+.button:focus-visible {
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: 1px;
+}

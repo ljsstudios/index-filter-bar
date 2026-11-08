@@ -1,12 +1,13 @@
 {
   "name": "@ljsstudios/index-filter-bar",
   "version": "0.0.0",
-  "description": "The Shopify admin's index search and filter bar for embedded apps: every filter type, saved views, columns and sort, built on Polaris web components.",
+  "description": "The Shopify admin's index search and filter bar for embedded apps on Polaris 2.0 web components: every filter type, saved views, columns and sort.",
   "keywords": [
     "shopify",
     "shopify-app",
     "polaris",
     "polaris-web-components",
+    "polaris-2",
     "react",
     "filters",
     "search",
@@ -49,10 +50,12 @@
     "knip": "knip",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "pnpm typecheck && pnpm lint && pnpm knip && pnpm test"
+    "check": "pnpm typecheck && pnpm lint && pnpm knip && pnpm test",
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "pack:check": "pnpm build && npm pack --dry-run"
   },
   "peerDependencies": {
-    "@shopify/polaris-types": ">=1"
+    "@shopify/polaris-types": "^2.0.0"
   },
   "peerDependenciesMeta": {
     "@shopify/polaris-types": {
@@ -64,10 +67,18 @@
     "@commitlint/cli": "^19.6.0",
     "@commitlint/config-conventional": "^19.6.0",
     "@shopify/polaris-types": "^2.0.0",
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "axe-core": "^4.14.0",
     "happy-dom": "^20.14.5",
     "husky": "^9.1.0",
     "knip": "^5.88.1",
     "lint-staged": "^15.5.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "typescript": "^5.7.0",
     "vite": "^8.3.1",
     "vitest": "^4.1.11"
@@ -76,5 +87,10 @@
     "*.{ts,tsx,js,mjs,cjs,json}": [
       "biome check --write --no-errors-on-unmatched"
     ]
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2"
   }
 }

@@ -1,0 +1,170 @@
+/* The admin's Reset view and Save slide-in, matched to the admin's measured
+   styles. */
+
+.slideIn {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  max-width: 0;
+  overflow: hidden;
+  transition: max-width 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* In over 300ms, out over 200ms. */
+.slideIn[data-open="true"] {
+  max-width: 200px;
+  transition-duration: 0.3s;
+}
+
+@media (prefers-reduced-motion) {
+  .slideIn {
+    transition: none;
+  }
+}
+
+.button {
+  all: unset;
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-inline-size: 28px;
+  min-block-size: 28px;
+  padding: 4px 12px;
+  gap: 2px;
+  border-radius: 9999px;
+  color: #101010;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.button:active:not(:disabled) {
+  background: rgba(0, 0, 0, 0.13);
+}
+
+/* Save with its menu open: the admin keeps the hover tint. */
+.button[data-active] {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.button:focus-visible {
+  background: rgba(0, 0, 0, 0.08);
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: 1px;
+}
+
+.iconOnly {
+  padding: 4px;
+  color: #606060;
+}
+
+.iconOnly:hover:not(:disabled),
+.iconOnly:focus-visible:not(:disabled) {
+  color: #4a4a4a;
+}
+
+.iconOnly:active:not(:disabled) {
+  color: #303030;
+}
+
+/* Save: half the end padding, then the select icon. On All the icon is
+   collapsed to nothing with 4px left, as the admin has it, so the button is
+   the same 51.76px either way the text sits. */
+.disclosure {
+  padding-inline-end: 6px;
+}
+
+.disclosureIcon {
+  display: inline-flex;
+  align-items: center;
+  width: 20px;
+  overflow: hidden;
+}
+
+.disclosureIcon[data-collapsed="true"] {
+  width: 0;
+  margin-inline-end: 4px;
+}
+
+/* The Save menu: action list rows with their shortcut keycaps. */
+.menu {
+  padding: 4px;
+  font-size: 13px;
+  line-height: 20px;
+  color: #101010;
+}
+
+/* The admin's ActionList items: 32px rows, a 24px icon box, 6px gaps. */
+.menuRow {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 32px;
+  padding: 4px 6px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menuRow:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+}
+
+.menuRow:active {
+  background: rgba(0, 0, 0, 0.13);
+}
+
+.menuRow:focus-visible {
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: -2px;
+}
+
+.menuIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.menuLabel {
+  flex: 1 1;
+  white-space: nowrap;
+}
+
+/* Polaris KeyboardKey, small: 20px keys, 4px apart. */
+.keys {
+  display: inline-flex;
+  gap: 4px;
+  padding-inline: 2px;
+}
+
+.key {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: #f2f2f2;
+  color: rgb(74, 74, 74);
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}

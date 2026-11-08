@@ -3,7 +3,7 @@
     "strict": true,
     "noUncheckedIndexedAccess": false,
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "types": ["vite/client", "@shopify/polaris-types"],
+    "types": ["vite/client", "@shopify/polaris-types", "node"],
     "target": "ES2022",
     "module": "ES2022",
     "moduleResolution": "bundler",
@@ -14,5 +14,5 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["src", "vitest.config.ts"]
+  "include": ["src", "vitest.config.ts", "vite.config.ts"]
 }

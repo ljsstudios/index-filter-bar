@@ -1,0 +1,529 @@
+/* The admin's search and filter field at desktop widths, matched to the
+   admin's measured styles. */
+
+.bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 28px;
+  padding-inline: 0 4px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  color: #101010;
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: -0.13px;
+}
+
+/* Focused, the field rounds to the control radius. Focus that did not come
+   from the pointer (Tab, coming back to the tab) also draws the admin's ring:
+   a 1px blue line with a faint blue glow. A click shows none. */
+.bar:has(.input:focus-within) {
+  border-radius: 12px;
+}
+
+.bar:not([data-pointer-focus]):has(.input:focus-within) {
+  box-shadow:
+    rgba(0, 0, 0, 0.04) 0 2px 3px -1px,
+    rgba(0, 0, 0, 0.04) 0 3px 4px -1.5px,
+    rgba(0, 0, 0, 0.04) 0 4px 5px -2px,
+    oklch(0.6289 0.2036 263.44) 0 0 0 1px,
+    rgba(53, 115, 246, 0.06) 0 0 0 3px,
+    rgba(53, 115, 246, 0.06) 0 4px 20px 2px,
+    rgba(53, 115, 246, 0.05) 0 0 8px 1px inset;
+}
+
+.icon {
+  display: flex;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.input {
+  position: relative;
+  display: flex;
+  flex: 1 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.wrapper {
+  position: relative;
+  flex: 1 0;
+  min-width: 0;
+}
+
+/* Fades over text scrolled out of view at either end. */
+.wrapper[data-overflow-left="true"]::before,
+.wrapper[data-overflow-right="true"]::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  z-index: 2;
+  height: calc(100% - 2px);
+  width: 28px;
+  pointer-events: none;
+}
+
+.wrapper[data-overflow-left="true"]::before {
+  inset-inline-start: 0;
+  background: linear-gradient(to right, #ffffff, transparent);
+}
+
+.wrapper[data-overflow-right="true"]::after {
+  inset-inline-end: 0;
+  background: linear-gradient(to left, #ffffff, transparent);
+}
+
+.editable {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 4px;
+  padding-inline-end: 28px;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: -0.13px;
+  color: #101010;
+  white-space: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  outline: none;
+}
+
+/* A chip active by a click or an arrow: the parked caret stays hidden. */
+.editable[data-chip-active] {
+  caret-color: transparent;
+}
+
+.editable::-webkit-scrollbar {
+  display: none;
+}
+
+.editable:empty {
+  padding-inline-end: 4px;
+  text-overflow: ellipsis;
+}
+
+.editable:empty::before {
+  content: attr(data-placeholder);
+  color: rgb(74, 74, 74);
+  pointer-events: none;
+}
+
+/* Focused, the placeholder gives way to the caret. */
+.bar:has(.input:focus-within) .editable:empty::before {
+  content: none;
+}
+
+.clear {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 2px;
+  margin: 0;
+}
+
+.input:focus-within .clear {
+  display: flex;
+}
+
+/* The admin's plain icon button: 20px, round, the secondary icon colour. */
+.clearButton {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  color: rgb(96, 96, 96);
+  cursor: pointer;
+}
+
+.clearButton:hover {
+  color: rgb(74, 74, 74);
+}
+
+.clearButton:focus-visible {
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: 1px;
+}
+
+/* Filter units in the field (the admin's FilterUnit, ParamChip, ValueChip;
+   desktop sizes from source/resolved/SearchBarPlus.css). */
+.unit {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  vertical-align: baseline;
+}
+
+.chip {
+  display: inline-block;
+  padding: 2px 4px;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.param {
+  border-radius: 8px 2px 2px 8px;
+  background-color: #f2f2f2;
+  padding-inline-start: 6px;
+  color: #101010;
+}
+
+.param:hover {
+  background-color: #ebebeb;
+}
+
+.param:active,
+.param.active {
+  background-color: #dddddd;
+}
+
+.value {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 2px;
+  background-color: oklch(0.95 0.0448 212.63);
+  color: oklch(0.2983 0.1584 261.98);
+}
+
+.value:hover {
+  background-color: rgb(178, 233, 246);
+  color: rgb(0, 27, 83);
+}
+
+.value:active,
+.value.active {
+  background-color: oklch(0.8821 0.0848 215.71);
+  color: rgb(0, 18, 56);
+}
+
+.lastValue {
+  border-radius: 2px 8px 8px 2px;
+  padding-inline-end: 6px;
+  transition: border-radius 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.lastValue:hover {
+  border-radius: 2px 6px 6px 2px;
+}
+
+/* The remove cross grows in on hover (fine pointers), always there on touch. */
+.remove {
+  all: unset;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 0;
+  margin-inline: 0;
+  padding-block: 4px;
+  position: relative;
+  opacity: 0;
+  overflow: hidden;
+  cursor: pointer;
+  color: rgb(0, 27, 83);
+  line-height: 1;
+  transition:
+    margin-inline 200ms cubic-bezier(0.42, 0, 0.58, 1),
+    opacity 200ms cubic-bezier(0.42, 0, 0.58, 1),
+    width 200ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .value:hover .remove {
+    width: 16px;
+    margin-inline: 2px -4px;
+    opacity: 1;
+    /* Shown, the 24px hit area below is no longer clipped. */
+    overflow: visible;
+  }
+}
+
+/* WCAG 2.5.8: a 24px hit area around the 16px ✕, drawn nothing. Clipped
+   while the ✕ is hidden at rest. */
+.remove::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .remove {
+    width: 24px;
+    height: 24px;
+    margin-block: -4px;
+    margin-inline: 0 -6px;
+    padding-block: 0;
+    opacity: 1;
+  }
+}
+
+/* Number units (the admin's NumericValueChip, RangeValueChip,
+   NumericInputChip and RangeSeparator). One number sits in a 2px-radius container with
+   2px before it; a range's two containers are plain, the second led by an en
+   dash. */
+.numeric,
+.range {
+  display: flex;
+  padding: 0 6px 0 2px;
+}
+
+.range {
+  overflow: hidden;
+}
+
+.numeric:focus-within,
+.range:focus-within {
+  background-color: oklch(0.8821 0.0848 215.71);
+  color: rgb(0, 18, 56);
+}
+
+/* Each number's container takes the dark text only while its own number has
+   focus; in a range the other stays light. */
+.numberContainer {
+  display: flex;
+  align-items: center;
+  border-radius: 2px;
+  color: oklch(0.2983 0.1584 261.98);
+}
+
+.numberContainer:focus-within {
+  color: rgb(0, 18, 56);
+}
+
+.numeric .numberContainer {
+  padding-inline-start: 2px;
+  background-color: oklch(0.95 0.0448 212.63);
+}
+
+.numeric:hover .numberContainer {
+  background-color: rgb(178, 233, 246);
+}
+
+.numeric:focus-within .numberContainer {
+  background-color: oklch(0.8821 0.0848 215.71);
+}
+
+.numberInput {
+  display: block;
+  min-width: 8px;
+  margin: 2px 0;
+  outline: none;
+  color: oklch(0.2983 0.1584 261.98);
+  white-space: nowrap;
+  cursor: text;
+  /* The text's own colour, over the field's hidden caret. */
+  caret-color: auto;
+}
+
+.numberInput:focus {
+  border-radius: 2px;
+  background-color: rgb(178, 233, 246);
+  color: rgb(0, 18, 56);
+}
+
+.numberInput:empty::before {
+  content: attr(data-placeholder);
+  color: oklch(0.2983 0.1584 261.98);
+  /* The admin's 0.6 reads 3.6:1 on the active chip; 0.7 clears WCAG's 4.5:1
+    . */
+  opacity: 0.7;
+}
+
+.separator {
+  padding: 0 2px;
+  color: oklch(0.2983 0.1584 261.98);
+}
+
+/* Typed dates (the admin's DateValueChip, DateRangeValueChip, DatePartInput,
+   DateSeparator, DateLabel and DateRangeSeparator). A
+   single date's group is a 2px-radius box like a number's; a range's groups
+   are plain. While a part has focus its whole group's digits and separators
+   take the input highlight; labels keep their colour. */
+.date,
+.dateRange {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+}
+
+.date {
+  padding: 0 6px 0 2px;
+}
+
+.dateRange {
+  padding: 0 6px 0 4px;
+  overflow: hidden;
+}
+
+.date:focus-within,
+.dateRange:focus-within {
+  background-color: oklch(0.8821 0.0848 215.71);
+  color: rgb(0, 18, 56);
+}
+
+/* Each group takes the dark text only while one of its parts has focus; in a
+   range the other stays light. */
+.dateGroup {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 2px;
+  color: oklch(0.2983 0.1584 261.98);
+}
+
+.dateGroup:focus-within {
+  color: rgb(0, 18, 56);
+}
+
+.date .dateGroup {
+  padding-inline-start: 2px;
+  background-color: oklch(0.95 0.0448 212.63);
+}
+
+.date:hover .dateGroup {
+  background-color: rgb(178, 233, 246);
+}
+
+.date:focus-within .dateGroup {
+  background-color: oklch(0.8821 0.0848 215.71);
+}
+
+.datePart {
+  display: block;
+  min-width: 8px;
+  margin: 2px 0;
+  outline: none;
+  color: oklch(0.2983 0.1584 261.98);
+  white-space: nowrap;
+  cursor: text;
+  caret-color: auto;
+}
+
+.datePart:empty::before {
+  content: attr(data-placeholder);
+  color: oklch(0.2983 0.1584 261.98);
+  /* The admin's 0.6 reads 3.6:1 on the active chip; 0.7 clears WCAG's 4.5:1
+    . */
+  opacity: 0.7;
+}
+
+.dateSeparator {
+  color: oklch(0.2983 0.1584 261.98);
+  opacity: 0.6;
+}
+
+.dateGroup:focus-within .datePart,
+.dateGroup:focus-within .dateSeparator {
+  background-color: rgb(178, 233, 246);
+  color: rgb(0, 18, 56);
+}
+
+.dateLabel {
+  padding-inline-end: 4px;
+  color: oklch(0.2983 0.1584 261.98);
+}
+
+.rangeSeparator {
+  padding: 0 2px;
+  color: oklch(0.2983 0.1584 261.98);
+}
+
+/* At rest a half range shows only its set end: a group with an empty part
+   folds away, and so does the en dash. */
+.unit:not([data-incomplete]) .dateRange:not(:focus-within):not(.active) .dateGroup:has(.datePart:empty) {
+  width: 0;
+  overflow: hidden;
+}
+
+.unit:not([data-incomplete]) .dateRange:not(:focus-within):not(.active):has(.datePart:empty) .rangeSeparator {
+  display: none;
+}
+
+/* Text values (the admin's TextInputChip and TextInput). The chip keeps the chip padding and goes dark only while active;
+   the text sits in its own lighter box while it has focus. */
+.textChip {
+  display: inline-flex;
+}
+
+.textInput {
+  min-width: 4px;
+  outline: none;
+  color: oklch(0.2983 0.1584 261.98);
+  white-space: pre-wrap;
+  cursor: text;
+}
+
+.textInput:focus {
+  border-radius: 2px;
+  background-color: rgb(178, 233, 246);
+  color: rgb(0, 18, 56);
+  caret-color: rgb(0, 18, 56);
+}
+
+.textInput:empty::before {
+  content: attr(data-placeholder);
+  color: oklch(0.2983 0.1584 261.98);
+  /* The admin's 0.6 reads 3.6:1 on the active chip; 0.7 clears WCAG's 4.5:1
+    . */
+  opacity: 0.7;
+}
+
+/* A currency amount's code and symbol (the admin's NumericPrefix). */
+.numberPrefix {
+  padding: 2px;
+  color: oklch(0.2983 0.1584 261.98);
+}
+
+/* A measurement's unit (the admin's NumericSuffix). */
+.numberSuffix {
+  padding: 2px;
+  color: oklch(0.2983 0.1584 261.98);
+}
+
+/* Read-only units (the admin's ReadOnlyParamChip and ReadOnlyValueChip):
+   flat grey, no hover or pressed state, an arrow cursor; only the x acts. */
+.readOnlyParam,
+.readOnlyParam:hover,
+.readOnlyParam:active,
+.readOnlyValue,
+.readOnlyValue:hover,
+.readOnlyValue:active {
+  background-color: #f2f2f2;
+  color: rgb(74, 74, 74);
+  cursor: default;
+}
+
+.readOnlyValue.lastValue:hover {
+  border-radius: 2px 8px 8px 2px;
+}
+
+.readOnlyValue .remove {
+  color: rgb(96, 96, 96);
+}
+
+/* Read by screen readers, not drawn. */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

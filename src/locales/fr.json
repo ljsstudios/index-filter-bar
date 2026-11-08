@@ -1,0 +1,91 @@
+{
+  "search": {
+    "placeholder": "Rechercher et filtrer",
+    "clear": "Effacer",
+    "removeFilter": "Supprimer le filtre",
+    "enter": "Entrée",
+    "fieldList": "Filtres",
+    "more": " + {count} de plus",
+    "noOptions": "Aucune option disponible",
+    "addFilter": "Ajouter un nouveau filtre",
+    "customDate": "Date personnalisée",
+    "customRange": "Plage personnalisée",
+    "starting": "Début",
+    "ending": "Fin"
+  },
+  "a11y": {
+    "help": "Tapez pour rechercher. Les flèches passent d’un filtre à l’autre. Retour arrière supprime un filtre.",
+    "remove": "Supprimer {chip}",
+    "values": "Valeurs de {field}",
+    "condition": "Condition de {field}",
+    "minimum": "minimum",
+    "maximum": "maximum",
+    "year": "année",
+    "month": "mois",
+    "day": "jour",
+    "added": "Filtre ajouté : {chip}",
+    "changed": "Filtre modifié : {chip}",
+    "removed": "Filtre supprimé : {chip}",
+    "chipHint": "{chip}. Retour arrière le supprime."
+  },
+  "operators": {
+    "is": "Est",
+    "isNot": "N'est pas",
+    "between": "Est compris entre",
+    "greaterThan": "Est supérieur à",
+    "lessThan": "Est inférieur à"
+  },
+  "views": {
+    "all": "Tout",
+    "switch": "Changer de vue",
+    "actions": "Actions pour {name}",
+    "rename": "Renommer la vue",
+    "duplicate": "Dupliquer la vue",
+    "delete": "Supprimer la vue",
+    "resetView": "Réinitialiser la vue",
+    "save": "Enregistrer",
+    "updateView": "Mettre à jour la vue",
+    "saveAsNew": "Enregistrer comme nouvelle vue",
+    "showViewFilters": "Afficher les filtres de la vue",
+    "hideViewFilters": "Masquer les filtres de la vue"
+  },
+  "viewModals": {
+    "saveAsHeading": "Enregistrer la vue sous",
+    "viewNameLabel": "Nom de la vue",
+    "nameLabel": "Nom",
+    "nameTaken": "Une vue porte déjà ce nom.",
+    "copyOf": "Copie de {name}",
+    "createView": "Créer la vue",
+    "save": "Enregistrer",
+    "discard": "Ignorer",
+    "cancel": "Annuler",
+    "deleteHeading": "Supprimer la vue ?",
+    "deleteBody": "Cette action est irréversible. La vue {name} ne sera plus disponible dans votre interface administrateur.",
+    "saveFailed": "La vue n’a pas pu être enregistrée. Réessayez.",
+    "createdToast": "Vue créée",
+    "renamedToast": "Vue renommée",
+    "deletedToast": "Vue supprimée"
+  },
+  "columns": {
+    "displayOptions": "Options d’affichage",
+    "sortBy": "Trier par",
+    "sortByNamed": "Trier par {sort}",
+    "columns": "Colonnes",
+    "show": "Afficher",
+    "hide": "Masquer",
+    "reorder": "Réorganiser {column}",
+    "dragInstructions": "Pour déplacer une colonne, appuyez sur espace ou entrée, utilisez les flèches haut et bas, puis appuyez sur espace ou entrée pour la déposer, ou sur échap pour annuler.",
+    "pickedUp": "{column} saisie.",
+    "movedTo": "{column} déplacée en position {position} sur {total}.",
+    "dropped": "{column} déposée en position {position} sur {total}.",
+    "cancelled": "Déplacement de {column} annulé."
+  },
+  "sort": {
+    "aToZ": "A-Z",
+    "zToA": "Z-A",
+    "lowToHigh": "Du plus bas au plus haut",
+    "highToLow": "Du plus haut au plus bas",
+    "oldestFirst": "Plus ancien d'abord",
+    "newestFirst": "Plus récent d'abord"
+  }
+}

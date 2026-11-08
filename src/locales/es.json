@@ -1,0 +1,91 @@
+{
+  "search": {
+    "placeholder": "Buscar y filtrar",
+    "clear": "Limpiar",
+    "removeFilter": "Quitar filtro",
+    "enter": "Intro",
+    "fieldList": "Filtros",
+    "more": " + {count} más",
+    "noOptions": "No hay opciones disponibles",
+    "addFilter": "Agregar nuevo filtro",
+    "customDate": "Fecha personalizada",
+    "customRange": "Rango personalizado",
+    "starting": "Inicio",
+    "ending": "Fin"
+  },
+  "a11y": {
+    "help": "Escribe para buscar. Usa las flechas para moverte entre los filtros. La tecla de retroceso quita un filtro.",
+    "remove": "Quitar {chip}",
+    "values": "Valores de {field}",
+    "condition": "Condición de {field}",
+    "minimum": "mínimo",
+    "maximum": "máximo",
+    "year": "año",
+    "month": "mes",
+    "day": "día",
+    "added": "Filtro agregado: {chip}",
+    "changed": "Filtro cambiado: {chip}",
+    "removed": "Filtro quitado: {chip}",
+    "chipHint": "{chip}. La tecla de retroceso lo quita."
+  },
+  "operators": {
+    "is": "Es",
+    "isNot": "No es",
+    "between": "Está entre",
+    "greaterThan": "Es mayor que",
+    "lessThan": "Es menor que"
+  },
+  "views": {
+    "all": "Todo",
+    "switch": "Cambiar vista",
+    "actions": "Acciones para {name}",
+    "rename": "Cambiar nombre de la vista",
+    "duplicate": "Duplicar vista",
+    "delete": "Eliminar vista",
+    "resetView": "Restablecer vista",
+    "save": "Guardar",
+    "updateView": "Actualizar vista",
+    "saveAsNew": "Guardar como vista nueva",
+    "showViewFilters": "Mostrar filtros de la vista",
+    "hideViewFilters": "Ocultar filtros de la vista"
+  },
+  "viewModals": {
+    "saveAsHeading": "Guardar vista como",
+    "viewNameLabel": "Nombre de la vista",
+    "nameLabel": "Nombre",
+    "nameTaken": "Ya existe una vista con este nombre.",
+    "copyOf": "Copia de {name}",
+    "createView": "Crear vista",
+    "save": "Guardar",
+    "discard": "Descartar",
+    "cancel": "Cancelar",
+    "deleteHeading": "¿Eliminar vista?",
+    "deleteBody": "Esta acción no se puede deshacer. La vista {name} ya no estará disponible en tu panel de control.",
+    "saveFailed": "No se pudo guardar la vista. Inténtalo de nuevo.",
+    "createdToast": "Vista creada",
+    "renamedToast": "Vista renombrada",
+    "deletedToast": "Vista eliminada"
+  },
+  "columns": {
+    "displayOptions": "Opciones de visualización",
+    "sortBy": "Ordenar por",
+    "sortByNamed": "Ordenar por {sort}",
+    "columns": "Columnas",
+    "show": "Mostrar",
+    "hide": "Ocultar",
+    "reorder": "Reordenar {column}",
+    "dragInstructions": "Para mover una columna, pulsa espacio o intro, usa las flechas arriba y abajo y pulsa espacio o intro para soltarla, o escape para cancelar.",
+    "pickedUp": "{column} seleccionada.",
+    "movedTo": "{column} movida a la posición {position} de {total}.",
+    "dropped": "{column} soltada en la posición {position} de {total}.",
+    "cancelled": "Se canceló el movimiento de {column}."
+  },
+  "sort": {
+    "aToZ": "A-Z",
+    "zToA": "Z-A",
+    "lowToHigh": "De menor a mayor",
+    "highToLow": "De mayor a menor",
+    "oldestFirst": "Más antiguo primero",
+    "newestFirst": "Más reciente primero"
+  }
+}

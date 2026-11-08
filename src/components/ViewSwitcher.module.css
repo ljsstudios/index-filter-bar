@@ -1,0 +1,241 @@
+/* The admin's views button and menu, matched to the admin's measured
+   styles. */
+
+.activator {
+  all: unset;
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-block-size: 28px;
+  padding-inline: 8px 2px;
+  border-radius: 9999px;
+  color: #101010;
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: -0.13px;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  max-width: 172px;
+  overflow: hidden;
+  transition: max-width 300ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.activator:hover,
+.activator[data-active] {
+  max-width: 400px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .activator:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+}
+
+.activator[data-active],
+.activator:active {
+  background: rgba(0, 0, 0, 0.13);
+}
+
+.activator:focus-visible {
+  background: rgba(0, 0, 0, 0.08);
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: 1px;
+}
+
+/* The label is the admin's s-internal-text, small and medium: 12px, weight
+   500, in the 13px/20px button. */
+.labelWrapper {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.06px;
+  max-width: 140px;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-inline-end: 2px;
+  transition: max-width 300ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.activator:hover .labelWrapper,
+.activator[data-active] .labelWrapper {
+  max-width: 400px;
+}
+
+.iconWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+/* The menu: one pane, 4px in from the popover's edge. */
+.pane {
+  padding: 4px;
+  font-size: 13px;
+  line-height: 20px;
+  color: #101010;
+}
+
+.viewList {
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  max-width: 280px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.viewItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+}
+
+.viewItemButton {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex: 1 1;
+  min-width: 0;
+  gap: 8px;
+  padding-block: 4px;
+  padding-inline: 4px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* Room for the "…" on the current view's row. */
+.viewList[data-has-view-actions="true"] .viewItemButton {
+  padding-inline-end: 32px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .viewItem:hover .viewItemButton {
+    background: rgba(0, 0, 0, 0.08);
+  }
+}
+
+.viewItemButton:active {
+  background: rgba(0, 0, 0, 0.13);
+}
+
+.viewItemButton:focus-visible {
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: -2px;
+}
+
+.checkIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.checkIcon[data-hidden="true"] {
+  visibility: hidden;
+}
+
+/* A hovered row previews its tick, faint. */
+@media (hover: hover) and (pointer: fine) {
+  .viewItem:hover .checkIcon[data-hidden="true"] {
+    visibility: visible;
+    opacity: 0.35;
+  }
+}
+
+.viewItemLabel {
+  flex: 1 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-align: start;
+}
+
+.viewItemLabel[data-current="true"] {
+  font-weight: 600;
+}
+
+.overflowTrigger {
+  position: absolute;
+  inset-inline-end: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.overflowButton {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 2px;
+  color: #606060;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .overflowButton:hover {
+    background: rgba(0, 0, 0, 0.13);
+    color: #101010;
+  }
+}
+
+.overflowButton:active {
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.overflowButton:focus-visible {
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: -2px;
+}
+
+/* The view's actions, in place of the list (one popover, a Back row on top). */
+.actionRow {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 180px;
+  padding: 4px 6px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .actionRow:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+}
+
+.actionRow:active {
+  background: rgba(0, 0, 0, 0.13);
+}
+
+.actionRow:focus-visible {
+  outline: 2px solid rgb(80, 131, 240);
+  outline-offset: -2px;
+}
+
+.actionRow[data-tone="critical"] {
+  color: rgb(142, 11, 33);
+}
+
+.backLabel {
+  font-weight: 600;
+}
+
+.divider {
+  height: 1px;
+  margin: 4px -4px;
+  background: #f2f2f2;
+}

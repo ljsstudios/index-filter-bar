@@ -1,0 +1,60 @@
+.wrapper {
+  display: inline-flex;
+}
+
+/* The admin's dark tooltip (s-internal-tooltip), matched to its measured styles. */
+.tooltip {
+  position: fixed;
+  z-index: 1000;
+  transform: translateY(-100%);
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: rgb(26, 26, 26);
+  color: rgb(238, 238, 238);
+  /* The admin's tooltip text is s-internal-text: Inter at 450, no
+     letter-spacing, contextual alternates off. */
+  font-family:
+    Inter,
+    ShopifyInter,
+    "Noto Sans Arabic",
+    "Noto Sans Hebrew",
+    -apple-system,
+    system-ui,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    sans-serif;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 450;
+  letter-spacing: normal;
+  font-feature-settings: "calt" 0;
+  /* On <body>, outside the page's own smoothing: without these the text
+     draws subpixel and reads heavier than the admin's. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow:
+    rgba(220, 220, 220, 0.18) 0 0 0 1px,
+    rgba(0, 0, 0, 0.15) 0 1px 2px 0,
+    rgba(0, 0, 0, 0.15) 0 3px 6px -5px,
+    rgba(0, 0, 0, 0.84) 0 8px 24px -8px;
+  animation: tooltip-in 0.25s cubic-bezier(0.19, 0.91, 0.38, 1);
+}
+
+/* The admin's open: from 0 opacity at 95% size, 250ms ease-out
+   (s-internal-tooltip's @starting-style). */
+@keyframes tooltip-in {
+  from {
+    opacity: 0;
+    transform: translateY(-100%) scale(0.95);
+  }
+}
+
+@media (prefers-reduced-motion) {
+  .tooltip {
+    animation: none;
+  }
+}

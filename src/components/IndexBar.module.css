@@ -1,0 +1,33 @@
+/* The admin's s-internal-section card, level 1, no padding (36px tall in all). */
+.card {
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow:
+    rgba(0, 0, 0, 0.24) 0 0 2px 0,
+    rgba(0, 0, 0, 0.02) 0 2px 12px 0,
+    rgba(0, 0, 0, 0.02) 0 4px 16px 0,
+    rgba(0, 0, 0, 0.02) 0 4px 48px 0;
+}
+
+/* The admin's Polaris-Box, 4px all round, holding its InlineStack rows: the
+   start group takes the room, the actions sit at the end. The row is 28px,
+   so the card is 36px. */
+.row {
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  min-height: 28px;
+}
+
+.main {
+  display: flex;
+  flex: 1 1 0%;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.search {
+  flex: 1 1 0%;
+  min-width: 0;
+}
