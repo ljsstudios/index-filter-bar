@@ -31,6 +31,7 @@ const LABELS = {
     changed: (chip: string) => `Filter changed: ${chip}`,
     removed: (chip: string) => `Filter removed: ${chip}`,
     chipHint: (chip: string) => `${chip}. Backspace removes it.`,
+    loading: "Loading",
   },
 };
 

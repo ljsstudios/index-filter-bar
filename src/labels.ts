@@ -39,6 +39,8 @@ export interface IndexFilterBarLabels {
     changed: string;
     removed: string;
     chipHint: string;
+    /** The loading row, while a long list's next values arrive. */
+    loading: string;
   };
   /** The standard conditions, for building fields (`operators` helpers). */
   operators: {

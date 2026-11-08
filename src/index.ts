@@ -31,6 +31,7 @@ export {
   type PartialLabels,
 } from "./labels";
 export { columnsToStore, reconcileColumns } from "./state/columns";
+export { localStorageViews } from "./state/localStorageViews";
 export {
   MAX_SAVED_VIEWS,
   MAX_VIEW_TITLE,

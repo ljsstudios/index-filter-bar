@@ -86,6 +86,7 @@ export const toSearchFieldLabels = (
       changed: (chip) => format(a11y.changed, { chip }),
       removed: (chip) => format(a11y.removed, { chip }),
       chipHint: (chip) => format(a11y.chipHint, { chip }),
+      loading: a11y.loading,
     },
   };
 };
@@ -115,6 +116,8 @@ export interface SearchFieldA11yLabels {
   removed: (chip: string) => string;
   /** Said when a chip becomes the active one: its words and how to remove it. */
   chipHint: (chip: string) => string;
+  /** The loading row's name, while more values arrive. */
+  loading: string;
 }
 
 interface SearchFieldProps {
@@ -165,6 +168,10 @@ const NO_FILTERS: readonly Omit<FilterUnit, "id">[] = [];
 const NO_USED_FIELDS: readonly string[] = [];
 const PICKER_ID = "search-field-picker";
 const HELP_ID = "search-field-help";
+/** Values shown at a time in a long list, and added on reaching its end (the admin's). */
+const VALUE_PAGE = 25;
+/** How long a server list waits after typing before it searches (the admin's). */
+const VALUE_SEARCH_DELAY = 250;
 let nextUnitId = 0;
 const newUnitId = () => `unit-${++nextUnitId}`;
 
@@ -205,6 +212,12 @@ export const SearchField = ({
   const [dismissed, setDismissed] = useState(false);
   const [highlight, setHighlight] = useState<Highlight>(null);
   const [filterText, setFilterText] = useState("");
+  // ---- Long value lists, a page at a time (the admin's 25) ----
+  // A list the page holds shows this many; scrolling to its end adds 25.
+  const [valueLimit, setValueLimit] = useState(VALUE_PAGE);
+  // A server list is fetching its next page or a search's first.
+  const [loadingValues, setLoadingValues] = useState(false);
+  const fetchingRef = useRef(false);
   const filterTextRef = useRef("");
   const [anchor, setAnchor] = useState({ left: 0, top: 0 });
   // Bumped when a unit changes, so the picker's rows read it afresh.
@@ -652,16 +665,25 @@ export const SearchField = ({
       ),
     }));
     if (active.part === "param") return operatorRows.map((row) => ({ ...row, section: undefined }));
-    // A number or a typed date is typed into its chip: no list (number-filters
-    // 23; a date's calendar is its own popover).
+    // A number or a typed date is typed into its chip: no list (a date's
+    // calendar is its own popover).
     if (isNumberField(field) || isTextField(field) || isTypedDate(field, unit)) return [];
-    // Typed after the unit, the values narrow to labels holding the text.
+    // Typed after the unit, the values narrow to labels holding the text;
+    // a server list is searched by the server instead.
     const typed = active.caret ? filterText.toLowerCase() : "";
-    const options = field.values.filter((option) => option.label.toLowerCase().includes(typed));
+    const options = field.fetchMoreValues
+      ? field.values
+      : field.values
+          .filter((option) => option.label.toLowerCase().includes(typed))
+          .slice(0, valueLimit);
     // Nothing to show, or nothing matching: the admin's one grey row, no conditions.
-    if (options.length === 0) {
+    if (options.length === 0 && !loadingValues) {
       return [{ id: "message:none", label: labels.noOptions, disabled: true }];
     }
+    // While a page loads, a spinner row ends the values.
+    const loadingRows: PickerRow[] = loadingValues
+      ? [{ id: "message:loading", label: "", disabled: true, loading: true }]
+      : [];
     const valueRows: PickerRow[] = options.map((option) => {
       const chosen = unit.values.includes(option.value);
       return {
@@ -698,8 +720,10 @@ export const SearchField = ({
           ),
         }))
       : [];
-    return [...valueRows, ...customRows, ...operatorRows];
+    return [...valueRows, ...loadingRows, ...customRows, ...operatorRows];
   }, [
+    valueLimit,
+    loadingValues,
     active,
     fields,
     usedFields,
@@ -712,6 +736,58 @@ export const SearchField = ({
   ]);
 
   const pickerOpen = focusedRef.current && !!active && !dismissed && rows.length > 0;
+
+  // The list field whose values are open, and the text typed to narrow them.
+  const valueUnit =
+    active?.kind === "chip" && active.part === "value" ? unitFor(active) : undefined;
+  const valueField = valueUnit ? fieldOf(valueUnit.field) : undefined;
+  const valueSearch = active?.kind === "chip" && active.caret ? filterText.trim() : "";
+  const valueKey = valueUnit ? `${valueUnit.id}:${valueSearch}` : "";
+  // A new list or a new search starts from its first page.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: valueKey is the list and search
+  useEffect(() => setValueLimit(VALUE_PAGE), [valueKey]);
+  const fetchValues = useCallback(async (field: FilterField, search: string) => {
+    if (fetchingRef.current) return;
+    fetchingRef.current = true;
+    setLoadingValues(true);
+    try {
+      await field.fetchMoreValues?.(search);
+    } finally {
+      fetchingRef.current = false;
+      setLoadingValues(false);
+    }
+  }, []);
+  // A server list: its first page when it opens empty, and a search 250ms
+  // after the typing stops (the admin's).
+  const searchedRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!valueField?.fetchMoreValues || !valueUnit) {
+      searchedRef.current = null;
+      return;
+    }
+    if (searchedRef.current === valueKey) return;
+    const run = () => {
+      searchedRef.current = valueKey;
+      void fetchValues(valueField, valueSearch);
+    };
+    const opening = !searchedRef.current?.startsWith(`${valueUnit.id}:`);
+    if (opening && valueSearch === "") {
+      if (valueField.values.length === 0) run();
+      else searchedRef.current = valueKey;
+      return;
+    }
+    const timer = setTimeout(run, VALUE_SEARCH_DELAY);
+    return () => clearTimeout(timer);
+  }, [valueField, valueUnit, valueKey, valueSearch, fetchValues]);
+  // Scrolled to the end of the values: the next 25, or the server's next page.
+  const onValuesEnd = () => {
+    if (!valueField) return;
+    if (valueField.fetchMoreValues) {
+      if (valueField.hasNextPage) void fetchValues(valueField, valueSearch);
+      return;
+    }
+    setValueLimit((limit) => limit + VALUE_PAGE);
+  };
   // Each list is named for what it holds: the field list, a field's values,
   // a field's condition. The value picker's conditions are their own list.
   const pickerField = active?.kind === "chip" ? fieldOf(unitFor(active)?.field ?? "") : undefined;
@@ -1776,6 +1852,8 @@ export const SearchField = ({
           enterLabel={labels.enter}
           onActiveChange={onPickerHover}
           onPick={pick}
+          onEndReached={onValuesEnd}
+          loadingLabel={labels.a11y.loading}
         />
       )}
     </div>

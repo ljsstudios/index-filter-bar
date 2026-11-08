@@ -26,7 +26,8 @@
     "added": "Filtro agregado: {chip}",
     "changed": "Filtro cambiado: {chip}",
     "removed": "Filtro quitado: {chip}",
-    "chipHint": "{chip}. La tecla de retroceso lo quita."
+    "chipHint": "{chip}. La tecla de retroceso lo quita.",
+    "loading": "Cargando"
   },
   "operators": {
     "is": "Es",

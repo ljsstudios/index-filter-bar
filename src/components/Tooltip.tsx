@@ -20,6 +20,8 @@ interface TooltipProps {
   content: string;
   /** The one element the tooltip labels; it keeps its own aria-label. */
   children: ReactElement;
+  /** For the wrapper, when it must take part in its parent's layout. */
+  className?: string;
 }
 
 /**
@@ -30,7 +32,7 @@ interface TooltipProps {
  * the window, as the admin's does by the bar's end. Decorative: the trigger
  * carries the same words as its accessible name.
  */
-export const Tooltip = ({ content, children }: TooltipProps) => {
+export const Tooltip = ({ content, children, className }: TooltipProps) => {
   const wrapperRef = useRef<HTMLSpanElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<{ left: number; top: number } | null>(null);
@@ -56,7 +58,7 @@ export const Tooltip = ({ content, children }: TooltipProps) => {
   return (
     <span
       ref={wrapperRef}
-      className={styles.wrapper}
+      className={className ? `${styles.wrapper} ${className}` : styles.wrapper}
       onPointerEnter={show}
       onPointerLeave={hide}
       onFocus={show}

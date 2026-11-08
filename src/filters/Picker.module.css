@@ -6,7 +6,9 @@
   position: absolute;
   z-index: 520;
   min-width: 200px;
-  max-width: 300px;
+  /* The admin's popover content: up to 400px, so a 300px list still fits
+     beside the 16px scrollbar track. */
+  max-width: 400px;
   border-radius: 16px;
   background: #ffffff;
   overflow: hidden;
@@ -35,6 +37,7 @@
 
 .pane {
   max-height: 292px;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -68,6 +71,7 @@
 .list {
   /* The measured least width is the whole list's, padding included. */
   box-sizing: border-box;
+  max-width: 300px;
   margin: 0;
   padding: 4px;
   list-style: none;
@@ -123,6 +127,16 @@
   margin-inline-start: -2px;
 }
 
+/* The label's box: it grows, but always leaves the Enter keycap's room and
+   4px, on every row (the admin's --p-picker-row-hint-width). */
+.labelWrap {
+  display: flex;
+  flex: 1 1;
+  min-width: 0;
+  max-width: calc(100% - var(--picker-row-hint-width, 0px) - 4px);
+}
+
+/* One line, clipped with an ellipsis; a clipped label has a tooltip. */
 .label {
   flex: 1 1;
   min-width: 0;
@@ -177,4 +191,21 @@
   display: inline-flex;
   visibility: hidden;
   pointer-events: none;
+}
+
+/* The loading row: a spinner while more values arrive (the admin's
+   LoadingRow and LoadingContent). */
+.loadingRow {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.loadingContent {
+  display: flex;
+  flex: 1 1;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0;
+  padding: 6px 12px;
 }

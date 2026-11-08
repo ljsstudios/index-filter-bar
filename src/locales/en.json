@@ -26,7 +26,8 @@
     "added": "Filter added: {chip}",
     "changed": "Filter changed: {chip}",
     "removed": "Filter removed: {chip}",
-    "chipHint": "{chip}. Backspace removes it."
+    "chipHint": "{chip}. Backspace removes it.",
+    "loading": "Loading"
   },
   "operators": {
     "is": "Is",

@@ -44,7 +44,23 @@ export interface FilterField {
   name: string;
   /** Several values (checkboxes) or one (ticks). */
   multi: boolean;
+  /**
+   * The values to pick from. A long list is shown 25 at a time, the next 25
+   * on scrolling to its end. With `fetchMoreValues`, these are the values
+   * loaded so far for the current search.
+   */
   values: FilterValue[];
+  /**
+   * Values from a server, a page at a time, as the admin's long lists are.
+   * Called with the text typed after the chip ("" for none): when the list
+   * opens empty, 250ms after the typing stops (replace `values` with that
+   * search's first page), and on scrolling to the end while `hasNextPage`
+   * (add the next page). The list shows a loading row until it resolves, and
+   * doesn't narrow the values itself.
+   */
+  fetchMoreValues?: (search: string) => Promise<void> | void;
+  /** More values to fetch for the current search. */
+  hasNextPage?: boolean;
   /** The first is the default condition. */
   operators: FilterOperator[];
 }

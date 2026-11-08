@@ -26,7 +26,8 @@
     "added": "Filtre ajouté : {chip}",
     "changed": "Filtre modifié : {chip}",
     "removed": "Filtre supprimé : {chip}",
-    "chipHint": "{chip}. Retour arrière le supprime."
+    "chipHint": "{chip}. Retour arrière le supprime.",
+    "loading": "Chargement"
   },
   "operators": {
     "is": "Est",

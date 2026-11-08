@@ -26,7 +26,8 @@
     "added": "Filter hinzugefügt: {chip}",
     "changed": "Filter geändert: {chip}",
     "removed": "Filter entfernt: {chip}",
-    "chipHint": "{chip}. Mit der Rücktaste entfernen."
+    "chipHint": "{chip}. Mit der Rücktaste entfernen.",
+    "loading": "Wird geladen"
   },
   "operators": {
     "is": "Ist",
