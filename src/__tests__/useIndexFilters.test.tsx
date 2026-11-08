@@ -129,7 +129,7 @@ describe("useIndexFilters", () => {
     act(() => result.current.props.columns?.onReorder(["sku", "title", "vendor"]));
     expect(result.current.visibleColumns).toEqual(["sku", "title", "vendor"]);
     expect(result.current.view.dirty).toBe(true);
-    act(() => result.current.props.save.onReset());
+    act(() => result.current.props.save?.onReset());
     expect(result.current.visibleColumns).toEqual(["title", "vendor"]);
     expect(result.current.view.dirty).toBe(false);
   });
@@ -142,7 +142,7 @@ describe("useIndexFilters", () => {
         { field: "vendor", operator: "is", values: ["Acme"] },
       ]),
     );
-    await act(() => result.current.props.modals.onCreate("Acme"));
+    await act(() => result.current.props.modals?.onCreate("Acme"));
     const saved = onViewsChange.mock.calls[0]?.[0] as SavedView[];
     expect(saved.map((view) => view.title)).toEqual(["All", "Drafts", "Acme"]);
     expect(saved[2]?.filters).toEqual([{ field: "vendor", operator: "is", values: ["Acme"] }]);
@@ -154,20 +154,20 @@ describe("useIndexFilters", () => {
     const onViewsChange = vi.fn().mockRejectedValue(new Error("offline"));
     const { result } = renderHook(() => useIndexFilters({ ...OPTIONS, onViewsChange }));
     await act(async () => {
-      await expect(result.current.props.modals.onCreate("Nope")).rejects.toThrow("offline");
+      await expect(result.current.props.modals?.onCreate("Nope")).rejects.toThrow("offline");
     });
-    expect(result.current.props.views.titles).toEqual(["All", "Drafts"]);
+    expect(result.current.props.views?.titles).toEqual(["All", "Drafts"]);
     expect(result.current.view.index).toBe(0);
   });
 
   it("renames, duplicates and deletes, landing on All after a delete", async () => {
     const { result } = renderHook(() => useIndexFilters(OPTIONS));
-    await act(() => result.current.props.modals.onRename(1, "Draft products"));
-    await act(() => result.current.props.modals.onDuplicate(1, "Copy of Draft products"));
+    await act(() => result.current.props.modals?.onRename(1, "Draft products"));
+    await act(() => result.current.props.modals?.onDuplicate(1, "Copy of Draft products"));
     expect(result.current.view.title).toBe("Copy of Draft products");
     expect(result.current.filters).toEqual(VIEWS[1]?.filters);
-    await act(() => result.current.props.modals.onDelete(2));
-    expect(result.current.props.views.titles).toEqual(["All", "Draft products"]);
+    await act(() => result.current.props.modals?.onDelete(2));
+    expect(result.current.props.views?.titles).toEqual(["All", "Draft products"]);
     expect(result.current.view.index).toBe(0);
     expect(result.current.filters).toEqual([]);
   });
@@ -226,10 +226,29 @@ describe("useIndexFilters", () => {
     act(() => result.current.setSort("created desc"));
     expect(window.location.search).toBe("");
   });
+
+  it("drops views, Save, the eye and the modals with savedViews: false, and keeps view out of the URL", () => {
+    setUrl("?view=Drafts");
+    const { result } = renderHook(() => useIndexFilters({ ...OPTIONS, savedViews: false }));
+    expect(result.current.props.views).toBeNull();
+    expect(result.current.props.save).toBeNull();
+    expect(result.current.props.modals).toBeNull();
+    expect(result.current.props.viewFilters).toBeNull();
+    expect(result.current.view).toEqual({ index: 0, title: "All", dirty: false });
+    expect(result.current.filters).toEqual([]);
+    act(() =>
+      result.current.props.search.onFiltersChange([
+        { field: "vendor", operator: "is", values: ["Acme"] },
+      ]),
+    );
+    expect(result.current.view.dirty).toBe(false);
+    expect(search().get("view")).toBeNull();
+    expect(search().getAll("vendor")).toEqual(["Acme"]);
+  });
 });
 
-const Page = () => {
-  const bar = useIndexFilters(OPTIONS);
+const Page = ({ options = OPTIONS }: { options?: UseIndexFiltersOptions }) => {
+  const bar = useIndexFilters(options);
   return <IndexFilterBar {...bar.props} />;
 };
 
@@ -241,6 +260,17 @@ describe("IndexFilterBar", () => {
     expect(getByRole("combobox", { name: "Search and filter" })).toBeTruthy();
     expect(getByRole("button", { name: "Display options" })).toBeTruthy();
     expect(getByRole("button", { name: "Show view filters" })).toBeTruthy();
+    expect(await axeViolations(container)).toEqual([]);
+  });
+
+  it("draws no views button, Save or modals without saved views", async () => {
+    const { container, queryByRole, getByRole } = render(
+      <Page options={{ ...OPTIONS, savedViews: false }} />,
+    );
+    expect(queryByRole("button", { name: "Switch view" })).toBeNull();
+    expect(container.querySelector('[data-parity="save-view"]')).toBeNull();
+    expect(container.querySelector("s-modal")).toBeNull();
+    expect(getByRole("combobox", { name: "Search and filter" })).toBeTruthy();
     expect(await axeViolations(container)).toEqual([]);
   });
 });

@@ -21,7 +21,7 @@ interface IndexBarProps {
 export const IndexBar = ({ views, children, actions }: IndexBarProps) => (
   <div className={styles.card} data-parity="bar-section">
     <div className={styles.row} data-parity="bar-row">
-      <div className={styles.main}>
+      <div className={styles.main} data-no-views={!views || undefined}>
         {views}
         <div className={styles.search}>{children}</div>
       </div>

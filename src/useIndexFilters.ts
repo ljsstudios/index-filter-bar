@@ -44,6 +44,13 @@ export interface UseIndexFiltersOptions {
    * Without it, views live only in memory.
    */
   onViewsChange?: (views: SavedView[]) => void | Promise<void>;
+  /**
+   * Saved views (default true): the views button, Reset and Save, the
+   * "Show view filters" eye and the save modals. False leaves the bar without
+   * them, as the admin's Gift cards and Segments are; `views` and
+   * `onViewsChange` are then ignored.
+   */
+  savedViews?: boolean;
   /** Keep search, filters, sort and view in the URL (default true). */
   url?: boolean;
   /** How long typing waits before `query` changes, in ms (default 400, the admin's). */
@@ -89,6 +96,7 @@ export const useIndexFilters = ({
   columns: pageColumns = NO_COLUMNS,
   views: initialViews,
   onViewsChange,
+  savedViews = true,
   url = true,
   searchDelay = 400,
   labels = defaultLabels,
@@ -105,7 +113,7 @@ export const useIndexFilters = ({
 
   // ---- Saved views: All first, always ----
   const [views, setViews] = useState<SavedView[]>(() => {
-    const list = initialViews && initialViews.length > 0 ? initialViews : [ALL];
+    const list = savedViews && initialViews && initialViews.length > 0 ? initialViews : [ALL];
     return list.map((view, index) =>
       index === 0 ? { ...view, sort: view.sort || defaultSort } : view,
     );
@@ -318,15 +326,17 @@ export const useIndexFilters = ({
     id,
     labels,
     readOnly,
-    views: {
-      titles: views.map((view) => view.title),
-      selected,
-      onSelect: (index) => {
-        setRevealedView(null);
-        select(index);
-      },
-      onAction: (index: number, action: ViewAction) => setModal({ kind: action, index }),
-    },
+    views: !savedViews
+      ? null
+      : {
+          titles: views.map((view) => view.title),
+          selected,
+          onSelect: (index) => {
+            setRevealedView(null);
+            select(index);
+          },
+          onAction: (index: number, action: ViewAction) => setModal({ kind: action, index }),
+        },
     search: {
       value: shownQuery,
       onChange: (value) => typeQuery(mergeViewQuery(value, hiddenQuery)),
@@ -353,29 +363,34 @@ export const useIndexFilters = ({
               })),
           }
         : null,
-    viewFilters: viewFilters.eye
-      ? { revealed, onToggle: () => setRevealedView(revealed ? null : selected) }
-      : null,
-    save: {
-      dirty,
-      onAll: selected === 0,
-      onReset: reset,
-      onSaveAsNew: () => setModal({ kind: "create", index: selected }),
-      onUpdate: () => {
-        update().catch((error: unknown) => onError?.(error, "create"));
-      },
-    },
-    modals: {
-      request: modal,
-      labelFor,
-      titleTaken,
-      onCreate: create,
-      onRename: rename,
-      onDuplicate: duplicate,
-      onDelete: remove,
-      onToast,
-      onError,
-    },
+    viewFilters:
+      savedViews && viewFilters.eye
+        ? { revealed, onToggle: () => setRevealedView(revealed ? null : selected) }
+        : null,
+    save: !savedViews
+      ? null
+      : {
+          dirty,
+          onAll: selected === 0,
+          onReset: reset,
+          onSaveAsNew: () => setModal({ kind: "create", index: selected }),
+          onUpdate: () => {
+            update().catch((error: unknown) => onError?.(error, "create"));
+          },
+        },
+    modals: !savedViews
+      ? null
+      : {
+          request: modal,
+          labelFor,
+          titleTaken,
+          onCreate: create,
+          onRename: rename,
+          onDuplicate: duplicate,
+          onDelete: remove,
+          onToast,
+          onError,
+        },
   };
 
   return {
@@ -394,7 +409,7 @@ export const useIndexFilters = ({
     /** Column keys to show, in order. */
     visibleColumns,
     /** The selected view: its index (0 is All), title, and whether the page differs from it. */
-    view: { index: selected, title: labelFor(selected), dirty },
+    view: { index: selected, title: labelFor(selected), dirty: savedViews && dirty },
     /** Anything narrowing the list, for an empty state's "Clear search and filters". */
     hasFilters: filters.length > 0 || queryValue.trim() !== "",
     clear,
@@ -408,12 +423,13 @@ export interface IndexFilterBarProps {
   id: string;
   labels: IndexFilterBarLabels;
   readOnly: boolean;
+  /** The views button; null without saved views. */
   views: {
     titles: string[];
     selected: number;
     onSelect: (index: number) => void;
     onAction: (index: number, action: ViewAction) => void;
-  };
+  } | null;
   search: {
     value: string;
     onChange: (value: string) => void;
@@ -438,7 +454,7 @@ export interface IndexFilterBarProps {
     onReset: () => void;
     onSaveAsNew: () => void;
     onUpdate: () => void;
-  };
+  } | null;
   modals: {
     request: ViewModalRequest | null;
     labelFor: (index: number) => string;
@@ -449,5 +465,5 @@ export interface IndexFilterBarProps {
     onDelete: (index: number) => Promise<void>;
     onToast?: (message: string) => void;
     onError?: (error: unknown, action: ViewModalKind) => void;
-  };
+  } | null;
 }

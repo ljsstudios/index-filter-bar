@@ -31,3 +31,10 @@
   flex: 1 1 0%;
   min-width: 0;
 }
+
+/* Without a views button the admin pads the search icon, 4px before and 2px
+   after (Gift cards, Segments): the field starts 30px into the card. */
+.main[data-no-views] [data-parity="search-icon"] {
+  box-sizing: content-box;
+  padding: 0 2px 0 4px;
+}

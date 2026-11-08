@@ -29,15 +29,17 @@ export const IndexFilterBar = ({
   <>
     <IndexBar
       views={
-        <ViewSwitcher
-          popoverId={`${id}-views`}
-          titles={views.titles}
-          selected={views.selected}
-          onSelect={views.onSelect}
-          onAction={views.onAction}
-          readOnly={readOnly}
-          labels={labels.views}
-        />
+        views && (
+          <ViewSwitcher
+            popoverId={`${id}-views`}
+            titles={views.titles}
+            selected={views.selected}
+            onSelect={views.onSelect}
+            onAction={views.onAction}
+            readOnly={readOnly}
+            labels={labels.views}
+          />
+        )
       }
       actions={
         <>
@@ -60,16 +62,18 @@ export const IndexFilterBar = ({
               labels={{ show: labels.views.showViewFilters, hide: labels.views.hideViewFilters }}
             />
           )}
-          <SaveControls
-            idPrefix={id}
-            dirty={save.dirty}
-            onAll={save.onAll}
-            onReset={save.onReset}
-            onSaveAsNew={save.onSaveAsNew}
-            onUpdate={save.onUpdate}
-            readOnly={readOnly}
-            labels={labels.views}
-          />
+          {save && (
+            <SaveControls
+              idPrefix={id}
+              dirty={save.dirty}
+              onAll={save.onAll}
+              onReset={save.onReset}
+              onSaveAsNew={save.onSaveAsNew}
+              onUpdate={save.onUpdate}
+              readOnly={readOnly}
+              labels={labels.views}
+            />
+          )}
         </>
       }
     >
@@ -83,18 +87,20 @@ export const IndexFilterBar = ({
         labels={search.labels}
       />
     </IndexBar>
-    <ViewModals
-      idPrefix={id}
-      request={modals.request}
-      labelFor={modals.labelFor}
-      titleTaken={modals.titleTaken}
-      onCreate={modals.onCreate}
-      onRename={modals.onRename}
-      onDuplicate={modals.onDuplicate}
-      onDelete={modals.onDelete}
-      labels={labels}
-      onToast={modals.onToast}
-      onError={modals.onError}
-    />
+    {modals && (
+      <ViewModals
+        idPrefix={id}
+        request={modals.request}
+        labelFor={modals.labelFor}
+        titleTaken={modals.titleTaken}
+        onCreate={modals.onCreate}
+        onRename={modals.onRename}
+        onDuplicate={modals.onDuplicate}
+        onDelete={modals.onDelete}
+        labels={labels}
+        onToast={modals.onToast}
+        onError={modals.onError}
+      />
+    )}
   </>
 );
