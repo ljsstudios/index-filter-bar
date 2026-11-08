@@ -43,7 +43,8 @@ afterEach(cleanup);
 const renderField = (value = "") => {
   const onChange = vi.fn();
   const view = render(<SearchField value={value} onChange={onChange} labels={LABELS} />);
-  const field = screen.getByRole("combobox") as HTMLDivElement;
+  // No fields: a plain textbox, as the admin's Segments search.
+  const field = screen.getByRole("textbox") as HTMLDivElement;
   return { ...view, field, onChange };
 };
 

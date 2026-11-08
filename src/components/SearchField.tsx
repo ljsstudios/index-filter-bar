@@ -1785,17 +1785,20 @@ export const SearchField = ({
           data-overflow-left={overflow.left}
           data-overflow-right={overflow.right}
         >
+          {/* biome-ignore lint/a11y/useAriaPropsSupportedByRole: aria-expanded is only set while the role is combobox. */}
           <div
             ref={editableRef}
             className={styles.editable}
             data-parity="search-editable"
-            role="combobox"
-            aria-label={labels.placeholder}
-            aria-expanded={pickerOpen}
+            // Without filters there is nothing to pick: a plain textbox, as
+            // the admin's Segments search is.
+            role={fields.length > 0 ? "combobox" : "textbox"}
+            aria-expanded={fields.length > 0 ? pickerOpen : undefined}
             aria-controls={pickerOpen ? pickerIds.join(" ") : undefined}
-            aria-describedby={HELP_ID}
-            aria-autocomplete="list"
+            aria-describedby={fields.length > 0 ? HELP_ID : undefined}
+            aria-autocomplete={fields.length > 0 ? "list" : undefined}
             aria-activedescendant={activeRow}
+            aria-label={labels.placeholder}
             tabIndex={0}
             contentEditable
             suppressContentEditableWarning
@@ -1815,9 +1818,11 @@ export const SearchField = ({
             onClick={onClick}
           />
         </div>
-        <span id={HELP_ID} className={styles.visuallyHidden}>
-          {labels.a11y.help}
-        </span>
+        {fields.length > 0 && (
+          <span id={HELP_ID} className={styles.visuallyHidden}>
+            {labels.a11y.help}
+          </span>
+        )}
         <span className={styles.visuallyHidden} aria-live="polite" data-parity="announcer">
           {announcement}
         </span>

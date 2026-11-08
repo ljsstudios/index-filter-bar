@@ -2,6 +2,7 @@ import { act, cleanup, fireEvent, render, renderHook } from "@testing-library/re
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { FilterField } from "../filters/types";
 import { IndexFilterBar } from "../IndexFilterBar";
+import { mergeLabels } from "../labels";
 import type { SavedView } from "../state/savedViews";
 import { axeViolations } from "../test/axe";
 import { type UseIndexFiltersOptions, useIndexFilters } from "../useIndexFilters";
@@ -310,6 +311,27 @@ describe("IndexFilterBar", () => {
     );
     expect(queryByRole("button", { name: "Display options" })).toBeNull();
     expect(queryByRole("button", { name: "Sort by" })).toBeNull();
+  });
+
+  it("searches without filters in a plain textbox, as the admin's Segments", async () => {
+    const { container, getByRole, queryByRole } = render(
+      <Page
+        options={{
+          ...OPTIONS,
+          fields: undefined,
+          columns: undefined,
+          savedViews: false,
+          labels: mergeLabels({ search: { placeholder: "Search segments" } }),
+        }}
+      />,
+    );
+    expect(queryByRole("combobox")).toBeNull();
+    const field = getByRole("textbox", { name: "Search segments" });
+    expect(field.getAttribute("aria-describedby")).toBeNull();
+    fireEvent.focus(field);
+    fireEvent.click(field);
+    expect(queryByRole("listbox")).toBeNull();
+    expect(await axeViolations(container)).toEqual([]);
   });
 
   it("draws no views button, Save or modals without saved views", async () => {
