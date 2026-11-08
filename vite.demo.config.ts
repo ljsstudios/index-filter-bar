@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 /** The demo's pages: each gets its own index.html so GitHub Pages serves the path. */
-const ROUTES = ["products", "inventory", "orders"];
+const ROUTES = ["products", "inventory", "orders", "segments"];
 
 // The demo site, built from demo/ and importing the package from its source.
 // Locally it serves from "/"; on GitHub Pages from the repo's path.

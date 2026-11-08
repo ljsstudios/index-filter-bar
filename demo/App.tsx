@@ -3,6 +3,7 @@ import { BASE, Footer } from "./DemoPage";
 import { Inventory } from "./pages/Inventory";
 import { Orders } from "./pages/Orders";
 import { Products } from "./pages/Products";
+import { Segments } from "./pages/Segments";
 
 const PAGES = [
   {
@@ -23,6 +24,13 @@ const PAGES = [
     about: "Date, currency, weight, text and read-only filters, like the admin's Orders.",
     icon: "order",
   },
+  {
+    route: "segments",
+    title: "Segments",
+    about:
+      "Search without filters, sort without columns and no saved views, like the admin's Segments.",
+    icon: "person-segment",
+  },
 ] as const;
 
 const readDebug = () => {
@@ -36,7 +44,7 @@ const readDebug = () => {
 /**
  * The demo: a welcome page, then Shopify-admin-style index pages built with
  * the bar on sample data, each at its own path (/products, /inventory,
- * /orders). Links between them load the page afresh, so each starts clean.
+ * /orders, /segments). Links between them load the page afresh, so each starts clean.
  */
 export const App = () => {
   const route = window.location.pathname.slice(BASE.length).replace(/\/$/, "");
@@ -95,6 +103,11 @@ export const App = () => {
     );
   }
 
-  const Page = { products: Products, inventory: Inventory, orders: Orders }[page.route];
+  const Page = {
+    products: Products,
+    inventory: Inventory,
+    orders: Orders,
+    segments: Segments,
+  }[page.route];
   return <Page debug={debug} onDebugChange={setDebug} />;
 };
