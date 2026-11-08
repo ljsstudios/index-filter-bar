@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/ljsstudios/index-filter-bar/compare/v0.1.0...v0.1.1) (2026-11-08)
+
+
+### Bug Fixes
+
+* **build:** no declaration maps ([704ad9b](https://github.com/ljsstudios/index-filter-bar/commit/704ad9b6399242c6cf8b345044f3bae0981ea089))
+
 ## 0.1.0 (2026-11-08)
 
 The first release.
