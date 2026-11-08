@@ -178,8 +178,9 @@ export const Picker = ({
               aria-label={sectionIndex === 0 ? label : (sectionLabels[section.key] ?? label)}
               aria-multiselectable={(sectionIndex === 0 && multiselectable) || undefined}
               // The measured width is the list's width, not just its least:
-              // a highlighted row's keycap can never stretch it.
-              style={minWidth === undefined ? undefined : { width: minWidth, minWidth }}
+              // a highlighted row's keycap can never stretch it. Narrower
+              // than the popover's 200px least, it fills the popover.
+              style={minWidth === undefined ? undefined : { width: minWidth, minWidth: "100%" }}
             >
               {section.rows.map(({ row, index }) =>
                 row.loading ? (
