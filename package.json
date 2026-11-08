@@ -52,7 +52,12 @@
     "test:watch": "vitest",
     "check": "pnpm typecheck && pnpm lint && pnpm knip && pnpm test",
     "build": "vite build && tsc -p tsconfig.build.json",
-    "pack:check": "pnpm build && npm pack --dry-run"
+    "pack:check": "pnpm build && npm pack --dry-run",
+    "demo": "vite --config vite.demo.config.ts",
+    "demo:build": "vite build --config vite.demo.config.ts",
+    "demo:preview": "vite preview --config vite.demo.config.ts",
+    "data:fetch": "node scripts/fetch-mock-shop.ts",
+    "data:generate": "node scripts/generate-demo-data.ts"
   },
   "peerDependencies": {
     "@shopify/polaris-types": "^2.0.0"

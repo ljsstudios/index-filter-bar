@@ -12,7 +12,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "paths": {
+      "@ljsstudios/index-filter-bar": ["./src/index.ts"]
+    },
+    "allowImportingTsExtensions": true
   },
-  "include": ["src", "vitest.config.ts", "vite.config.ts"]
+  "include": ["src", "demo", "scripts", "vitest.config.ts", "vite.config.ts", "vite.demo.config.ts"]
 }
