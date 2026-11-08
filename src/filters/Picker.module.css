@@ -66,6 +66,8 @@
 }
 
 .list {
+  /* The measured least width is the whole list's, padding included. */
+  box-sizing: border-box;
   margin: 0;
   padding: 4px;
   list-style: none;
@@ -167,4 +169,12 @@
   display: flex;
   width: 16px;
   height: 16px;
+}
+
+/* Off-screen: only measured, for the lists' width. */
+.measure {
+  position: absolute;
+  display: inline-flex;
+  visibility: hidden;
+  pointer-events: none;
 }

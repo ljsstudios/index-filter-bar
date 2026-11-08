@@ -81,6 +81,8 @@ export interface IndexFilterBarLabels {
     createdToast: string;
     renamedToast: string;
     deletedToast: string;
+    /** After Update view. */
+    savedToast: string;
   };
   columns: {
     displayOptions: string;

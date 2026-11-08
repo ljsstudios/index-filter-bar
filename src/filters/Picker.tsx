@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect } from "react";
+import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./Picker.module.css";
 
 export interface PickerRow {
@@ -58,6 +58,39 @@ export const Picker = ({
     document.getElementById(pickerRowId(id, activeIndex))?.scrollIntoView?.({ block: "nearest" });
   }, [id, activeIndex]);
 
+  // The admin's width: the widest label, 50px, and the Enter keycap, capped at
+  // 300px, set as the lists' least width each time the rows change. So the
+  // popover never grows when the keycap lands on the longest row.
+  const popoverRef = useRef<HTMLDivElement>(null);
+  const hintRef = useRef<HTMLSpanElement>(null);
+  const [minWidth, setMinWidth] = useState<number | undefined>(undefined);
+  const [fontsReady, setFontsReady] = useState(0);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: rows and fontsReady are when to measure again
+  useLayoutEffect(() => {
+    const root = popoverRef.current;
+    if (!root) return;
+    const labels = [...root.querySelectorAll<HTMLElement>("[data-picker-label]")];
+    for (const el of labels) {
+      el.style.flex = "none";
+      el.style.width = "max-content";
+    }
+    const widest = labels.reduce((max, el) => Math.max(max, el.getBoundingClientRect().width), 0);
+    for (const el of labels) {
+      el.style.flex = "";
+      el.style.width = "";
+    }
+    const hint = hintRef.current?.getBoundingClientRect().width ?? 0;
+    setMinWidth(labels.length > 0 ? Math.min(widest + 50 + hint, 300) : undefined);
+  }, [rows, fontsReady]);
+  // A web font arriving late changes the widths: measure again.
+  useEffect(() => {
+    let live = true;
+    document.fonts?.ready.then(() => live && setFontsReady((n) => n + 1));
+    return () => {
+      live = false;
+    };
+  }, []);
+
   const sections: Array<{ key: string; rows: Array<{ row: PickerRow; index: number }> }> = [];
   rows.forEach((row, index) => {
     const key = row.section ?? "main";
@@ -68,11 +101,19 @@ export const Picker = ({
 
   return (
     <div
+      ref={popoverRef}
       className={styles.popover}
       style={{ left: anchor.left, top: anchor.top }}
       data-parity="picker"
       onMouseDown={(event) => event.preventDefault()}
     >
+      {/* The keycap, measured once for the width, never seen. */}
+      <span ref={hintRef} className={`${styles.hint} ${styles.measure}`} aria-hidden="true">
+        <span className={styles.hintIcon}>
+          <s-icon type="return" size="small"></s-icon>
+        </span>
+        {enterLabel}
+      </span>
       {sections.map((section, sectionIndex) => (
         <div key={section.key}>
           {sectionIndex > 0 && <div className={styles.divider} data-parity="picker-divider" />}
@@ -83,6 +124,7 @@ export const Picker = ({
               id={sectionIndex === 0 ? id : `${id}-${section.key}`}
               aria-label={sectionIndex === 0 ? label : (sectionLabels[section.key] ?? label)}
               aria-multiselectable={(sectionIndex === 0 && multiselectable) || undefined}
+              style={minWidth === undefined ? undefined : { minWidth }}
             >
               {section.rows.map(({ row, index }) => (
                 // biome-ignore lint/a11y/useFocusableInteractive: focus stays in the field, which points here with aria-activedescendant and owns the keys
@@ -103,7 +145,7 @@ export const Picker = ({
                 >
                   <div className={styles.rowContent}>
                     {row.prefix}
-                    <span className={styles.label} data-parity="picker-label">
+                    <span className={styles.label} data-parity="picker-label" data-picker-label>
                       {row.label}
                     </span>
                     <span className={styles.hint} aria-hidden="true" data-parity="picker-hint">

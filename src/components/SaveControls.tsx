@@ -73,7 +73,7 @@ export const SaveControls = ({
   const mod = MAC ? "⌘" : "Ctrl";
 
   return (
-    <div className={styles.slideIn} data-open={dirty} aria-hidden={!dirty || undefined}>
+    <div className={styles.slideIn} data-open={dirty} inert={!dirty || undefined}>
       <Tooltip content={labels.resetView}>
         <button
           type="button"

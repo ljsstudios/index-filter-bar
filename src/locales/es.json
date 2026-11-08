@@ -64,7 +64,8 @@
     "saveFailed": "No se pudo guardar la vista. Inténtalo de nuevo.",
     "createdToast": "Vista creada",
     "renamedToast": "Vista renombrada",
-    "deletedToast": "Vista eliminada"
+    "deletedToast": "Vista eliminada",
+    "savedToast": "Vista guardada"
   },
   "columns": {
     "displayOptions": "Opciones de visualización",

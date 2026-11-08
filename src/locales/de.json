@@ -64,7 +64,8 @@
     "saveFailed": "Die Ansicht konnte nicht gespeichert werden. Versuche es erneut.",
     "createdToast": "Ansicht erstellt",
     "renamedToast": "Ansicht umbenannt",
-    "deletedToast": "Ansicht gelöscht"
+    "deletedToast": "Ansicht gelöscht",
+    "savedToast": "Ansicht gespeichert"
   },
   "columns": {
     "displayOptions": "Anzeigeoptionen",

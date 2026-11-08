@@ -64,7 +64,8 @@
     "saveFailed": "La vue n’a pas pu être enregistrée. Réessayez.",
     "createdToast": "Vue créée",
     "renamedToast": "Vue renommée",
-    "deletedToast": "Vue supprimée"
+    "deletedToast": "Vue supprimée",
+    "savedToast": "Vue enregistrée"
   },
   "columns": {
     "displayOptions": "Options d’affichage",

@@ -22,6 +22,7 @@ export { ViewFiltersButton } from "./components/ViewFiltersButton";
 export { type ViewModalKind, type ViewModalRequest, ViewModals } from "./components/ViewModals";
 export { type ViewAction, ViewSwitcher } from "./components/ViewSwitcher";
 export type { FilterField, FilterOperator, FilterUnit, FilterValue } from "./filters/types";
+export { IndexFilterBar } from "./IndexFilterBar";
 export {
   defaultLabels,
   format,
@@ -39,6 +40,14 @@ export {
   type SavedViewFilter,
 } from "./state/savedViews";
 export {
+  decodeFilters,
+  encodeFilters,
+  filterParam,
+  readUrlState,
+  type UrlState,
+  writeUrlState,
+} from "./state/url";
+export {
   mergeViewFilters,
   mergeViewQuery,
   splitViewFilters,
@@ -46,3 +55,9 @@ export {
   type ViewFilterSplit,
   type ViewQuerySplit,
 } from "./state/viewFilters";
+export {
+  type IndexColumn,
+  type IndexFilterBarProps,
+  type UseIndexFiltersOptions,
+  useIndexFilters,
+} from "./useIndexFilters";

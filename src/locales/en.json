@@ -64,7 +64,8 @@
     "saveFailed": "The view could not be saved. Try again.",
     "createdToast": "View created",
     "renamedToast": "View renamed",
-    "deletedToast": "View deleted"
+    "deletedToast": "View deleted",
+    "savedToast": "View saved"
   },
   "columns": {
     "displayOptions": "Display options",
